@@ -1,0 +1,11 @@
+# Site settings
+title: servo-influxdb
+email: PolymathicCoder@gmail.com
+description: A Servo and InfluxDB Integration
+baseurl: "/pages/PolymathicCoder/servo-influxdb"
+url: "https://github.com/pages/PolymathicCoder/servo-influxdb"
+twitter_username: PolymathicCoder
+github_username:  PolymathicCoder
+
+# Build settings
+markdown: kramdown
