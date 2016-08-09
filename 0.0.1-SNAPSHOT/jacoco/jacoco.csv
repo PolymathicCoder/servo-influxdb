@@ -1,0 +1,18 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb,InfluxDBMetricObserver,47,113,0,2,7,26,2,7,2,6
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb,InfluxDBMetricObserver.InfluxDBMetricObserverMetrics,0,40,0,0,0,9,0,1,0,1
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBClientException,0,20,0,0,0,7,0,3,0,3
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBOperationException.DataDefinitionException.DatabaseCreationException,0,34,0,0,0,5,0,3,0,3
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBConnectionException.TimedOutException,0,26,0,0,0,5,0,3,0,3
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBOperationException.DataDefinitionException,0,4,0,0,0,2,0,1,0,1
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBOperationException.DataManipulationException,0,4,0,0,0,2,0,1,0,1
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBConnectionException,0,20,0,0,0,4,0,3,0,3
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBOperationException,0,31,0,2,0,4,0,4,0,3
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBConnectionException.RefusedException,0,26,0,0,0,5,0,3,0,3
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations.error,InfluxDBOperationException.DataManipulationException.DataWriteOperationException,0,41,0,0,0,6,0,3,0,3
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations,InfluxDBConfiguration.BatchPolicy,0,21,0,0,0,8,0,4,0,4
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations,InfluxDBConnection,6,33,0,0,2,9,2,2,2,2
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations,InfluxDBConfiguration,0,33,0,0,0,12,0,6,0,6
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations,InfluxDBOperations,2,179,0,12,0,44,0,11,0,5
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.operations,InfluxDBOperations.new Object() {...},3,23,0,0,0,1,0,1,0,1
+servo-influxdb,com.polymathiccoder.servo.publish.influxdb.util,NetflixServoUtils,162,0,20,0,28,0,18,0,8,0
