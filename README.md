@@ -1,0 +1,12 @@
+```xml
+<repositories>
+    <repository>
+        <id>gitHub-repository</id>
+        <url>https://raw.github.com/PolymathicCoder/servo-influxdb/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
+```
