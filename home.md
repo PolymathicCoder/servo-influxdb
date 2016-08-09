@@ -5,8 +5,8 @@ permalink: /
 ---
 # servo-influxdb
 
-{{projectDescription}}
+A Servo and InfluxDB Integration.
 
 * [GitHub Repository](https://github.com/PolymathicCoder/servo-influxdb)
-* [GitHub Pages](https://github.com/pages/PolymathicCoder/servo-influxdb)
+* [GitHub Pages](https://PolymathicCoder.github.io/servo-influxdb)
 * [Maven Repository](https://raw.github.com/PolymathicCoder/servo-influxdbt/mvn-repo/)
