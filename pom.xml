@@ -118,7 +118,6 @@
 			<version>1.6.5</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.unitils</groupId>
 			<artifactId>unitils-core</artifactId>
@@ -213,6 +212,17 @@
 					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
 				</configuration>
 			</plugin>
+			<!-- Staging -->
+			<plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <nexusUrl>file://${project.build.directory}/mvn-repo</nexusUrl>
+          <serverId>internal.repo</serverId>
+        </configuration>
+      </plugin>
 			<!-- GitHub Site -->
 			<plugin>
 				<groupId>com.github.github</groupId>
@@ -233,7 +243,7 @@
 							<goal>site</goal>
 						</goals>
 						<configuration>
-							<host>github.com</host>
+							<host>api.github.com</host>
 							<repositoryOwner>PolymathicCoder</repositoryOwner>
 							<repositoryName>servo-influxdb</repositoryName>
 							<server>github-com</server>
@@ -250,7 +260,7 @@
 							<goal>site</goal>
 						</goals>
 						<configuration>
-							<host>github.com</host>
+							<host>api.github.com</host>
 							<repositoryOwner>PolymathicCoder</repositoryOwner>
 							<repositoryName>servo-influxdb</repositoryName>
 							<server>github-com</server>
