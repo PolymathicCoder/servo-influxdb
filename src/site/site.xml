@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Lifecycle Asset Management" xmlns="http://maven.apache.org/DECORATION/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+
+    <bannerLeft>
+      <name>servo-influxdb</name>
+      <href>https://github.com/pages/PolymathicCoder/servo-influxdb/1.0.0-SNAPSHOT/index.html</href>
+    </bannerLeft>
+
+    <bannerRight>
+      <name>servo-influxdb</name>
+      <href>https://github.com/pages/PolymathicCoder/servo-influxdb/1.0.0-SNAPSHOT/index.html</href>
+      <src>/images/project-logo_100x101.png</src>
+    </bannerRight>
+
+    <body>
+      <links>
+        <item name="PolymathicCoder on GitHub" href="https://github.com/PolymathicCoder"/>
+      </links>
+
+      <menu name="Links">
+        <item name="GitHub Repository" href="https://github.com/PolymathicCoder/servo-influxdb" />
+        <item name="GitHub Pages" href="https://github.com/pages/PolymathicCoder/servo-influxdb"/>
+        <item name="Maven Repository" href="https://raw.github.com/PolymathicCoder/servo-influxdb/mvn-repo/"/>
+      </menu>
+
+      <menu ref="reports"/>
+    </body>
+
+    <skin>
+      <groupId>org.apache.maven.skins</groupId>
+      <artifactId>maven-fluido-skin</artifactId>
+      <version>1.5</version>
+    </skin>
+
+    <custom>
+      <fluidoSkin>
+          <sideBarEnabled>true</sideBarEnabled>
+          <gitHub>
+            <projectId>PolymathicCoder/servo-influxdb</projectId>
+            <ribbonOrientation>right</ribbonOrientation>
+            <ribbonColor>black</ribbonColor>
+          </gitHub>
+      </fluidoSkin>
+    </custom>
+</project>
