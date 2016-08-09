@@ -2,7 +2,7 @@
 title: servo-influxdb
 email: PolymathicCoder@gmail.com
 description: A Servo and InfluxDB Integration
-baseurl: "/"
+baseurl: "/servo-influxdb"
 url: "https://PolymathicCoder.github.io/servo-influxdb"
 twitter_username: PolymathicCoder
 github_username:  PolymathicCoder
