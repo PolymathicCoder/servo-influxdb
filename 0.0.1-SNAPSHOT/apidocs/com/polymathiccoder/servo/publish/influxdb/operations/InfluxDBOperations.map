@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="../InfluxDBMetricObserver.html" title="com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserver" alt="" coords="100,11,1264,164"/>
+<area shape="rect" id="node1" href="../InfluxDBMetricObserver.html" title="&lt;TABLE&gt;" alt="" coords="89,5,1275,169"/>
+<area shape="rect" id="node3_1" href="./InfluxDBOperations.html" title="com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBOperations" alt="" coords="472,223,892,335"/>
+<area shape="rect" id="node3" href="./InfluxDBOperations.html" title="&lt;TABLE&gt;" alt="" coords="461,217,903,340"/>
+<area shape="rect" id="node2_2" href="./error/InfluxDBClientException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBClientException" alt="" coords="16,393,748,532"/>
+<area shape="rect" id="node2" href="./error/InfluxDBClientException.html" title="&lt;TABLE&gt;" alt="" coords="5,388,759,537"/>
+<area shape="rect" id="node4_3" href="./InfluxDBConnection.html" title="com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBConnection" alt="" coords="793,399,1173,526"/>
+<area shape="rect" id="node4" href="./InfluxDBConnection.html" title="&lt;TABLE&gt;" alt="" coords="783,394,1184,531"/>
+</map>

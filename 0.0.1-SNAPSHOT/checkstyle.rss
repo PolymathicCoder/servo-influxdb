@@ -23,9 +23,9 @@ under the License.
     <link>https://github.com/pages/PolymathicCoder/servo-influxdb</link>
     <description>servo-influxdb - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2016</copyright>
+    <copyright>&#169;2016 PolymathicCoder LLC</copyright>
     <item>
-      <title>File: 16,
+      <title>File: 17,
              Errors: 262,
              Warnings: 0,
              Infos: 0
@@ -130,6 +130,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserverIntegrationTest.java">com/polymathiccoder/servo/publish/influxdb/InfluxDBMetricObserverIntegrationTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserverTest.java">com/polymathiccoder/servo/publish/influxdb/InfluxDBMetricObserverTest.java</a>
                 </td>
                 <td>
@@ -139,7 +153,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  20
+                  19
                 </td>
               </tr>
                           <tr>
@@ -209,7 +223,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  20
+                  18
                 </td>
               </tr>
                           <tr>

@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="./InfluxDBConnectionException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBConnectionException" alt="" coords="16,11,452,93"/>
+<area shape="rect" id="node1" href="./InfluxDBConnectionException.html" title="&lt;TABLE&gt;" alt="" coords="5,5,463,99"/>
+<area shape="rect" id="node2_1" href="./InfluxDBConnectionException.RefusedException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBConnectionException.RefusedException" alt="" coords="47,152,421,235"/>
+<area shape="rect" id="node2" href="./InfluxDBConnectionException.RefusedException.html" title="&lt;TABLE&gt;" alt="" coords="36,147,432,240"/>
+</map>

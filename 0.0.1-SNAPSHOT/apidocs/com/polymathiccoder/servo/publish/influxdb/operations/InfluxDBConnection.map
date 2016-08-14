@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="./InfluxDBOperations.html" title="com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBOperations" alt="" coords="205,11,625,123"/>
+<area shape="rect" id="node1" href="./InfluxDBOperations.html" title="&lt;TABLE&gt;" alt="" coords="194,5,635,128"/>
+<area shape="rect" id="node2_1" href="./InfluxDBConnection.html" title="com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBConnection" alt="" coords="225,181,605,308"/>
+<area shape="rect" id="node2" href="./InfluxDBConnection.html" title="&lt;TABLE&gt;" alt="" coords="214,176,615,313"/>
+<area shape="rect" id="node3_2" href="./InfluxDBConfiguration.html" title="com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBConfiguration" alt="" coords="16,367,813,567"/>
+<area shape="rect" id="node3" href="./InfluxDBConfiguration.html" title="&lt;TABLE&gt;" alt="" coords="5,361,824,572"/>
+</map>
