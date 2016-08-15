@@ -1,3 +1,28 @@
+
+# Running Tests
+mvn test
+mvn test -P unit-tests
+mvn test -P integration-tests
+mvn test -P all-tests
+
+# Deploy Binaries to the mvn-repo branch
+mvn deploy
+
+# Sign and deploy
+mvn clean deploy -Dgpg.keyname=F1033A0A -Dgpg.passphrase=Secr3t
+
+
+# Deply Site to the gh-pages branch
+mvn site-deploy
+
+
+mvn sprint-boot:run
+mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=microservice1”
+mvn sonar:sonar -Dsonar.host.url=http://192.168.99.100:9000 -Dsonar.jdbc.url="jdbc:h2:tcp://192.168.99.100/sonar" -Dsonar.jdbc.username=sonar -Dsonar.jdbc.password=sonar -Dsonar.profile=
+
+
+---
+
 A Servo and InfluxDB Integration.
 
 * [Servo](https://github.com/Netflix/servo) is an Open-Source application monitoring library by [Netflix](https://netflix.github.io/)

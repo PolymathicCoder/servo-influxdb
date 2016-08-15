@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder <PolymathicCoder@gmail.com>.
+ * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder PolymathicCoder@gmail.com.
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ import com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOpera
  * An Observer that forwards metrics to an InfluxDB instance.
  *
  * @author Abdelmonaim Remani, {@literal @}PolymathicCoder
- *         <PolymathicCoder@gmail.com>
+ *         PolymathicCoder@gmail.com
  */
 public class InfluxDBMetricObserver implements MetricObserver {
 
@@ -68,8 +68,8 @@ public class InfluxDBMetricObserver implements MetricObserver {
      * database, such as appending additional tags. If no database exists with
      * the name said in the configuration, it will be automatically created.
      *
-     * @param influxDBConfiguration
-     *            The InfluxDB configuration.
+     * @param influxDBOperations
+     *            XXXX.
      * @param metricTransformations
      *            A list of closures allowing for transforming metrics before
      *            writing them to the database. The closure are applied in the

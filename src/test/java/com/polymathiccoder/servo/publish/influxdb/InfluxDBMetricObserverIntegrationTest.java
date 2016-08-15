@@ -15,9 +15,10 @@
  */
 package com.polymathiccoder.servo.publish.influxdb;
 
-import com.netflix.servo.Metric;
+import org.junit.Test;
 
-@FunctionalInterface
-public interface MetricTransformation {
-    Metric apply(final Metric metric);
+public class InfluxDBMetricObserverIntegrationTest {
+    @Test
+    public void test() {
+    }
 }

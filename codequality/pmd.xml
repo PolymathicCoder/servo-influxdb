@@ -8,8 +8,8 @@
   <description>
   Exclude noisy rules.
   </description>
-  <!--
   <rule ref="rulesets/internal/all-java.xml">
+    <!--
     <exclude name="AbstractNaming"/>
     <exclude name="AddEmptyString"/>
     <exclude name="AppendCharacterWithChar"/>
@@ -72,6 +72,7 @@
     <exclude name="UselessParentheses"/>
     <exclude name="UseStringBufferForStringAppends"/>
     <exclude name="UseVarargs"/>
+    -->
   </rule>
   -->
 </ruleset>

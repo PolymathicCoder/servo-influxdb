@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder <PolymathicCoder@gmail.com>.
+ * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder PolymathicCoder@gmail.com.
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * An InfluxDB configuration.
  *
- * @author Abdelmonaim Remani, {@literal @}PolymathicCoder <PolymathicCoder@gmail.com>
+ * @author Abdelmonaim Remani, {@literal @}PolymathicCoder PolymathicCoder@gmail.com
  */
 public class InfluxDBConfiguration {
 

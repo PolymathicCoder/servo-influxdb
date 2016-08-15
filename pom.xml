@@ -2,19 +2,106 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+<!-- Project Information -->
 	<name>servo-influxdb</name>
 	<description>A Servo and InfluxDB Integration</description>
 	<url>https://github.com/pages/PolymathicCoder/servo-influxdb</url>
+	<inceptionYear>2016</inceptionYear>
 
 	<groupId>com.polymathiccoder</groupId>
 	<artifactId>servo-influxdb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<organization>
+    <name>PolymathicCoder LLC</name>
+    <url>http://www.polymathiccoder.com</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+
+	<developers>
+		<developer>
+			<id>PolymathicCoder</id>
+			<name>Abdelmonaim Remani</name>
+			<email>PolymathicCoder@gmail.com</email>
+			<organization>PolymathicCoder LLC.</organization>
+			<organizationUrl>http://www.polymathiccoder.com/</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-8</timezone>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Abdelmonaim Remani</name>
+			<email>PolymathicCoder@gmail.com</email>
+      <roles>
+        <role>Architecture</role>
+      </roles>
+		</contributor>
+	</contributors>
+
+	<mailingLists>
+    <mailingList>
+      <archive>http://groups.google.com/group/servo-influxdb</archive>
+      <name>servo-influxdb</name>
+      <post>servo-influxdb@googlegroups.com</post>
+      <subscribe>http://groups.google.com/group/servo-influxdb</subscribe>
+      <unsubscribe>servo-influxdb+unsubscribe@googlegroups.com</unsubscribe>
+    </mailingList>
+  </mailingLists>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/PolymathicCoder/servo-influxdb/issues</url>
+	</issueManagement>
+
+	<scm>
+		<url>https://github.com/PolymathicCoder/servo-influxdb</url>
+		<connection>scm:git:git://github.com/PolymathicCoder/servo-influxdb.git</connection>
+		<developerConnection>scm:git:git@github.com:PolymathicCoder/servo-influxdb.git</developerConnection>
+	</scm>
+
+<!-- Propersties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
+	<profiles>
+		<profile>
+      <id>unit-tests</id>
+      <properties>
+				<skip.unit.tests>false</skip.unit.tests>
+        <skip.integration.tests>true</skip.integration.tests>
+      </properties>
+			<activation>
+        <activeByDefault>true</activeByDefault>
+    	</activation>
+    </profile>
+    <profile>
+      <id>all-tests</id>
+      <properties>
+				<skip.unit.tests>false</skip.unit.tests>
+        <skip.integration.tests>false</skip.integration.tests>
+      </properties>
+    </profile>
+    <profile>
+      <id>integration-tests</id>
+      <properties>
+				<skip.unit.tests>true</skip.unit.tests>
+        <skip.integration.tests>false</skip.integration.tests>
+      </properties>
+    </profile>
+  </profiles>
+
+<!-- dependencies -->
 	<dependencies>
 		<!-- Compile -->
 		<dependency>
@@ -118,6 +205,7 @@
 			<version>1.6.5</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.unitils</groupId>
 			<artifactId>unitils-core</artifactId>
@@ -132,6 +220,7 @@
 		</dependency>
 	</dependencies>
 
+<!-- Build -->
 	<build>
 		<plugins>
 			<!-- Compiler -->
@@ -140,52 +229,166 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
+					<compilerVersion>${java.version}</compilerVersion>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<!-- JaCoCo -->
+
+			<!-- Lombok -->
+			<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+				<version>1.16.10.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>delombok</goal>
+						</goals>
+						<configuration>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+<!-- Testing -->
+			<!-- Surefire to run unit tests -->
+			<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-surefire-plugin</artifactId>
+		    <version>2.19.1</version>
+		    <configuration>
+					<skipTests>${skip.unit.tests}</skipTests>
+					<argLine>${utCoverageAgent}</argLine>
+					<forkCount>5</forkCount>
+          <reuseForks>true</reuseForks>
+	        <excludes>
+	          <exclude>**/*IntegrationTest.java</exclude>
+	        </excludes>
+		    </configuration>
+			</plugin>
+
+			<!-- Failsafe to run integration tests -->
+			<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-failsafe-plugin</artifactId>
+		    <version>2.19.1</version>
+				<configuration>
+					<skipTests>${skip.integration.tests}</skipTests>
+					<argLine>${itCoverageAgent}</argLine>
+					<forkCount>5</forkCount>
+          <reuseForks>true</reuseForks>
+					<includes>
+	          <include>**/*IntegrationTest.java</include>
+	        </includes>
+		    </configuration>
+		    <executions>
+	        <execution>
+            <id>integration-tests</id>
+            <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+            </goals>
+	        </execution>
+		    </executions>
+			</plugin>
+
+			<!-- JaCoCo for Code Coverage -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.7.201606060606</version>
-				<configuration>
-					<forkCount>5</forkCount>
-          			<reuseForks>true</reuseForks>
-          			<argLine>-Dnet.sf.ehcache.disabled=true -Dfile.encoding=${project.build.sourceEncoding}</argLine>
-				</configuration>
 				<executions>
+					<!-- For Unit Tests -->
+	        <execution>
+            <id>pre-unit-test</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+							<propertyName>utCoverageAgent</propertyName>
+              <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+            </configuration>
+	        </execution>
+	        <execution>
+            <id>post-unit-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+							<goal>report-aggregate</goal>
+            </goals>
+            <configuration>
+              <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+              <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+            </configuration>
+	        </execution>
+					<!-- For Integration Tests -->
 					<execution>
-						<id>jacoco-initialize</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>jacoco-site</id>
-						<phase>package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
+            <id>pre-integration-test</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+							<propertyName>itCoverageAgent</propertyName>
+              <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+            </configuration>
+	        </execution>
+	        <execution>
+            <id>post-integration-test</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>report</goal>
+							<goal>report-aggregate</goal>
+            </goals>
+            <configuration>
+              <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+              <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+            </configuration>
+	        </execution>
+		    </executions>
 			</plugin>
-			<!-- Site -->
+
+<!-- Static Source Code Analyzer -->
+			<!-- Checkstyle -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.5.1</version>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
 				<configuration>
-					<skipDeploy>true</skipDeploy>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
+					<configLocation>${basedir}/codequality/checkstyle.xml</configLocation>
+					<headerFile>${basedir}/codequality/HEADER</headerFile>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.doxia</groupId>
-						<artifactId>doxia-module-markdown</artifactId>
-						<version>1.7</version>
-					</dependency>
-				</dependencies>
 			</plugin>
+
+			<!-- PMD -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.6</version>
+				<configuration>
+					<sourceEncoding>utf-8</sourceEncoding>
+					<targetJdk>${maven.compile.target}</targetJdk>
+					<linkXref>true</linkXref>
+					<includeTests>true</includeTests>
+					<verbose>true</verbose>
+					<minimumTokens>100</minimumTokens>
+					<rulesets>
+						<ruleset>${basedir}/codequality/pmd.xml</ruleset>
+					</rulesets>
+				</configuration>
+			</plugin>
+
+			<!-- FindBugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.4</version>
+			</plugin>
+
 			<!-- Docker -->
 			<plugin>
 				<groupId>com.spotify</groupId>
@@ -203,6 +406,7 @@
 					</resources>
 				</configuration>
 			</plugin>
+
 			<!-- Deploy -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -212,6 +416,7 @@
 					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
 				</configuration>
 			</plugin>
+
 			<!-- Staging -->
 			<plugin>
         <groupId>org.sonatype.plugins</groupId>
@@ -223,11 +428,30 @@
           <serverId>internal.repo</serverId>
         </configuration>
       </plugin>
+
+			<!-- Site -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<skipDeploy>true</skipDeploy>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-module-markdown</artifactId>
+						<version>1.7</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 			<!-- GitHub Site -->
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
 				<version>0.12</version>
+				<!--
 				<dependencies>
 					<dependency>
 						<groupId>org.eclipse.mylyn.github</groupId>
@@ -235,6 +459,7 @@
 						<version>2.1.5</version>
 					</dependency>
 				</dependencies>
+				-->
 				<executions>
 					<execution>
 						<id>mvn-site</id>
@@ -265,7 +490,7 @@
 							<repositoryName>servo-influxdb</repositoryName>
 							<server>github-com</server>
 							<branch>refs/heads/mvn-repo</branch>
-							<path>${project.version}</path>
+							<path></path>
 							<message>Generated Maven artifacts for: ${project.version}</message>
 							<merge>true</merge>
 							<noJekyll>true</noJekyll>
@@ -277,6 +502,98 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- Release -->
+			<plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+        <artifactId>jgitflow-maven-plugin</artifactId>
+        <version>1.0-m5.1</version>
+				<configuration>
+			    <enableSshAgent>true</enableSshAgent>
+			    <pushFeatures>true</pushFeatures>
+			    <pushReleases>true</pushReleases>
+			    <pushHotfixes>true</pushHotfixes>
+			    <noDeploy>true</noDeploy><!-- Only CI can deploy -->
+			    <flowInitContext>
+			      <developBranchName>develop</developBranchName>
+			      <versionTagPrefix>rev-</versionTagPrefix><!-- Custom your tag prefixes-->
+			    </flowInitContext>
+			  </configuration>
+      </plugin>
+
+<!-- Security Analysis -->
+			<!-- OWASP Dependecy Check -->
+			<plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>1.4.2</version>
+        <configuration>
+            <cveValidForHours>12</cveValidForHours>
+            <failBuildOnCVSS>4</failBuildOnCVSS>
+        </configuration>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>check</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+
+<!-- Dependecy Analysis -->
+
+<!-- Misc -->
+			<!-- I am not a lawyer -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>ianal-maven-plugin</artifactId>
+				<version>1.0-alpha-1</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>verify-legal-files</goal>
+						</goals>
+						<configuration>
+							<strict>false</strict>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- GPG Code Signing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Credentials -->
+			<plugin>
+        <groupId>com.github.genthaler</groupId>
+        <artifactId>credentials-maven-plugin</artifactId>
+        <version>1.3</version>
+        <configuration>
+          <usernameProperty>username</usernameProperty>
+          <passwordProperty>password</passwordProperty>
+          <settingsKey>github-com</settingsKey>
+          <useSystemProperties>true</useSystemProperties>
+        </configuration>
+				<!--
+				<username>${settingsKey}.username</username>
+				<password>${settingsKey}.password</password>
+				-->
+      </plugin>
+
 		</plugins>
 	</build>
 
@@ -291,19 +608,108 @@
 			<name>Temporary Staging Repository</name>
 			<url>file://${project.build.directory}/mvn-repo</url>
 		</snapshotRepository>
+		<!--
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		-->
 	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+    <repository>
+      <id>egit</id>
+      <name>Eclipse egit</name>
+      <url>https://repo.eclipse.org/content/repositories/egit-releases/</url>
+    </repository>
+	</repositories>
 
 	<reporting>
 		<plugins>
+			<!-- Documentation -->
+			<!-- JavaDoc + UML (Requires GraphViz) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<failOnError>true</failOnError>
+					<source>${java.version}</source>
+					<version>true</version>
+					<aggregate>true</aggregate>
+					<linksource>true</linksource>
+					<breakiterator>true</breakiterator>
+					<detectLinks>true</detectLinks>
+					<detectOfflineLinks>true</detectOfflineLinks>
+					<links>
+						<link>http://download.oracle.com/javase/8/docs/api/</link>
+						<link>https://docs.oracle.com/javaee/7/api/</link>
+						<link>http://docs.spring.io/spring/docs/current/javadoc-api/</link>
+						<link>http://slf4j.org/api/</link>
+						<link>http://junit.sourceforge.net/javadoc/</link>
+					</links>
+					<show>private</show>
+					<additionalparam>
+						-views
+						-all
+						-hide ^((?!com.polymathiccoder).*)$
+						-collpackages java.util.*
+						-qualify
+						-attributes -types -visibility -operations -constructors -enumerations -enumconstants
+						-inferrel
+						-inferdep
+						-inferdepinpackage
+						-quiet
+						-postfixpackage
+						-nodefontsize 9
+						-nodefontpackagesize 7
+					</additionalparam>
+
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+					<docletArtifact>
+						<groupId>org.umlgraph</groupId>
+						<artifactId>umlgraph</artifactId>
+						<version>5.6.6</version>
+					</docletArtifact>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>html</id>
+						<configuration>
+							<doctitle>${project.name} ${project.version}</doctitle>
+							<windowtitle>${project.name} ${project.version}</windowtitle>
+						</configuration>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
 			<!-- Checkstyle -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.17</version>
-				<configuration>
-					<includeTestSourceDirectory>true</includeTestSourceDirectory>
-					<configLocation>${basedir}/codequality/checkstyle.xml</configLocation>
-				</configuration>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -312,80 +718,186 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!-- JXR -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.5</version>
-			</plugin>
+
 			<!-- PMD -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>3.6</version>
-				<configuration>
-					<sourceEncoding>utf-8</sourceEncoding>
-					<targetJdk>${java.version}</targetJdk>
-					<includeTests>true</includeTests>
-					<linkXref>true</linkXref>
-					<verbose>true</verbose>
-				</configuration>
 			</plugin>
-			<!-- Reports -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-				</configuration>
-			</plugin>
-			<!-- JaCoCo -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.7.201606060606</version>
-			</plugin>
-			<!-- Cobertura -->
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-					</formats>
-				</configuration>
-			</plugin>
-			-->
+
 			<!-- FindBugs -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>3.0.4</version>
 			</plugin>
-			<!-- JavaNCSS -->
-			<!--
+
+			<!-- OWASP Dependecy Check -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>javancss-maven-plugin</artifactId>
-				<version>2.1</version>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>1.4.2</version>
+				<configuration>
+					<name>OWASP Vulnerability Check</name>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
 			</plugin>
-			-->
+
+			<!-- JXR for Cross-referencing the Source Code -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
+			</plugin>
+
+			<!-- Reports -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+					<dependencyLocationsEnabled>true</dependencyLocationsEnabled>
+				</configuration>
+			</plugin>
+
+			<!-- JaCoCo -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.7.201606060606</version>
+				<configuration>
+          <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+        </configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
 			<!-- JDepend -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>
 				<version>2.0</version>
 			</plugin>
-			<!-- Sonar -->
+
+			<!-- Changes -->
+			<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.12</version>
+				<configuration>
+					<onlyCurrentVersion>true</onlyCurrentVersion>
+					<onlyMilestoneIssues>true</onlyMilestoneIssues>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>github-report</report>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+      </plugin>
+
+			<!-- Tag Report -->
+      <plugin>
+      	<groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <multipleLineComments>true</multipleLineComments>
+					<tags>
+						<tag>IDEA</tag>
+						<tag>idea</tag>
+						<tag>MUDO</tag>
+          	<tag>mudo</tag>
+						<tag>NOPMD</tag>
+            <tag>NOTE</tag>
+          </tags>
+					<tagListOptions>
+						<tagClasses>
+							<tagClass>
+								<displayName>Todo Work</displayName>
+								<tags>
+									<tag>
+										<matchString>TODO</matchString>
+										<matchType>ignoreCase</matchType>
+									</tag>
+									<tag>
+										<matchString>FIXME</matchString>
+										<matchType>ignoreCase</matchType>
+									</tag>
+								</tags>
+							</tagClass>
+						</tagClasses>
+					</tagListOptions>
+				</configuration>
+      </plugin>
+
+			<!-- Clirr for Compatibility Checks -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.0.2</version>
+				<artifactId>clirr-maven-plugin</artifactId>
+				<version>2.7</version>
 			</plugin>
 		</plugins>
+
+		<!-- Sonar -->
+		<!--
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.0.2</version>
+		</plugin>
+		-->
+
 	</reporting>
+
+<!--
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+-->
 
 </project>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder <PolymathicCoder@gmail.com>.
+ * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder PolymathicCoder@gmail.com.
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import retrofit.mime.TypedByteArray;
  * An Observer that forwards metrics to an InfluxDB instance.
  *
  * @author Abdelmonaim Remani, {@literal @}PolymathicCoder
- *         <PolymathicCoder@gmail.com>
+ *         PolymathicCoder@gmail.com
  */
 public class InfluxDBOperations {
 
