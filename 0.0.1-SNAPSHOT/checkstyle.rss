@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2016 PolymathicCoder LLC</copyright>
     <item>
-      <title>File: 17,
-             Errors: 262,
+      <title>File: 10,
+             Errors: 219,
              Warnings: 0,
              Infos: 0
       </title>
@@ -55,105 +55,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  16
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBConnection.java">com/polymathiccoder/servo/publish/influxdb/operations/InfluxDBConnection.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBClientException.java">com/polymathiccoder/servo/publish/influxdb/operations/error/InfluxDBClientException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  14
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.util.SampleData.java">com/polymathiccoder/servo/publish/influxdb/util/SampleData.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  13
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBOperationsTest.java">com/polymathiccoder/servo/publish/influxdb/operations/InfluxDBOperationsTest.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  59
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.util.SampleAPIResponses.java">com/polymathiccoder/servo/publish/influxdb/util/SampleAPIResponses.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  13
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserverIntegrationTest.java">com/polymathiccoder/servo/publish/influxdb/InfluxDBMetricObserverIntegrationTest.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserverTest.java">com/polymathiccoder/servo/publish/influxdb/InfluxDBMetricObserverTest.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  19
+                  23
                 </td>
               </tr>
                           <tr>
@@ -167,12 +69,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  33
+                  37
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#Main.java">Main.java</a>
+                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBConnection.java">com/polymathiccoder/servo/publish/influxdb/operations/InfluxDBConnection.java</a>
                 </td>
                 <td>
                   0
@@ -181,40 +83,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
+                  12
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.MetricTransformation.java">com/polymathiccoder/servo/publish/influxdb/MetricTransformation.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException.java">com/polymathiccoder/servo/publish/influxdb/operations/error/InfluxDBOperationException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  23
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserver.java">com/polymathiccoder/servo/publish/influxdb/InfluxDBMetricObserver.java</a>
+                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBClientException.java">com/polymathiccoder/servo/publish/influxdb/operations/error/InfluxDBClientException.java</a>
                 </td>
                 <td>
                   0
@@ -228,6 +102,48 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.MetricTransformation.java">com/polymathiccoder/servo/publish/influxdb/MetricTransformation.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException.java">com/polymathiccoder/servo/publish/influxdb/operations/error/InfluxDBOperationException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  40
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserver.java">com/polymathiccoder/servo/publish/influxdb/InfluxDBMetricObserver.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  37
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBOperations.java">com/polymathiccoder/servo/publish/influxdb/operations/InfluxDBOperations.java</a>
                 </td>
                 <td>
@@ -237,21 +153,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/pages/PolymathicCoder/servo-influxdb/checkstyle.html#com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBConnectionTest.java">com/polymathiccoder/servo/publish/influxdb/operations/InfluxDBConnectionTest.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
+                  24
                 </td>
               </tr>
                           <tr>
@@ -265,7 +167,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  14
+                  24
                 </td>
               </tr>
                           <tr>
@@ -279,7 +181,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  1
                 </td>
               </tr>
                       </tbody>
