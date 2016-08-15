@@ -37,6 +37,15 @@
 			<timezone>-8</timezone>
 		</developer>
 	</developers>
+	<contributors>
+		<contributor>
+			<name>Abdelmonaim Remani</name>
+			<email>PolymathicCoder@gmail.com</email>
+      <roles>
+        <role>Architecture</role>
+      </roles>
+		</contributor>
+	</contributors>
 
 	<mailingLists>
     <mailingList>
@@ -49,15 +58,15 @@
   </mailingLists>
 
 	<issueManagement>
-		<system>github</system>
+		<system>GitHub</system>
 		<url>https://github.com/PolymathicCoder/servo-influxdb/issues</url>
 	</issueManagement>
 
 	<scm>
-    <connection>scm:git:https://PolymathicCoder@github.com/PolymathicCoder/servo-influxdb.git</connection>
-    <developerConnection>scm:git:https://PolymathicCoder@github.com/PolymathicCoder/servo-influxdb.git</developerConnection>
-    <url>https://PolymathicCoder@github.com/PolymathicCoder/servo-influxdb.git</url>
-  </scm>
+		<url>https://github.com/PolymathicCoder/servo-influxdb</url>
+		<connection>scm:git:git://github.com/PolymathicCoder/servo-influxdb.git</connection>
+		<developerConnection>scm:git:git@github.com:PolymathicCoder/servo-influxdb.git</developerConnection>
+	</scm>
 
 <!-- Propersties -->
 	<properties>
@@ -244,6 +253,7 @@
 				</executions>
 			</plugin>
 
+<!-- Testing -->
 			<!-- Surefire to run unit tests -->
 			<plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
@@ -339,6 +349,44 @@
             </configuration>
 	        </execution>
 		    </executions>
+			</plugin>
+
+<!-- Static Source Code Analyzer -->
+			<!-- Checkstyle -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
+					<configLocation>${basedir}/codequality/checkstyle.xml</configLocation>
+					<headerFile>${basedir}/codequality/HEADER</headerFile>
+				</configuration>
+			</plugin>
+
+			<!-- PMD -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.6</version>
+				<configuration>
+					<sourceEncoding>utf-8</sourceEncoding>
+					<targetJdk>${maven.compile.target}</targetJdk>
+					<linkXref>true</linkXref>
+					<includeTests>true</includeTests>
+					<verbose>true</verbose>
+					<minimumTokens>100</minimumTokens>
+					<rulesets>
+						<ruleset>${basedir}/codequality/pmd.xml</ruleset>
+					</rulesets>
+				</configuration>
+			</plugin>
+
+			<!-- FindBugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.4</version>
 			</plugin>
 
 			<!-- Docker -->
@@ -444,7 +492,7 @@
 							<branch>refs/heads/mvn-repo</branch>
 							<path>${project.version}</path>
 							<message>Generated Maven artifacts for: ${project.version}</message>
-							<merge>true</merge>
+							<merge>false</merge>
 							<noJekyll>true</noJekyll>
 							<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 							<includes>
@@ -473,6 +521,28 @@
 			  </configuration>
       </plugin>
 
+<!-- Security Analysis -->
+			<!-- OWASP Dependecy Check -->
+			<plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>1.4.2</version>
+        <configuration>
+            <cveValidForHours>12</cveValidForHours>
+            <failBuildOnCVSS>4</failBuildOnCVSS>
+        </configuration>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>check</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+
+<!-- Dependecy Analysis -->
+
+<!-- Misc -->
 			<!-- I am not a lawyer -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -490,6 +560,23 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- GPG Code Signing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -598,14 +685,47 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.17</version>
-				<configuration>
-					<includeTestSourceDirectory>true</includeTestSourceDirectory>
-					<configLocation>${basedir}/codequality/checkstyle.xml</configLocation>
-				</configuration>
-
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
 			</plugin>
 
-			<!-- JXR -->
+			<!-- PMD -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.6</version>
+			</plugin>
+
+			<!-- FindBugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.4</version>
+			</plugin>
+
+			<!-- OWASP Dependecy Check -->
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>1.4.2</version>
+				<configuration>
+					<name>OWASP Vulnerability Check</name>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!-- JXR for Cross-referencing the Source Code -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
@@ -615,20 +735,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- PMD -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.6</version>
-				<configuration>
-					<sourceEncoding>utf-8</sourceEncoding>
-					<targetJdk>${java.version}</targetJdk>
-					<linkXref>true</linkXref>
-					<includeTests>true</includeTests>
-					<verbose>true</verbose>
-					<minimumTokens>100</minimumTokens>
-				</configuration>
-			</plugin>
 			<!-- Reports -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -637,19 +743,6 @@
 				<configuration>
 					<dependencyDetailsEnabled>true</dependencyDetailsEnabled>
 					<dependencyLocationsEnabled>true</dependencyLocationsEnabled>
-					<!-- simpler configuration without reportSets available for usual cases -->
-          <!-- distribution-management, index, dependencies, help, issue-tracking, plugins, cim,
-          license, dependency-management, mailing-list, project-team, dependency-convergence,
-          scm, plugin-management, modules, summary -->
-					<!--
-					<reports>
-            <report>index</report>
-            <report>dependencies</report>
-            <report>issue-tracking</report>
-            <report>scm</report>
-            <report>summary</report>
-          </reports>
-					-->
 				</configuration>
 			</plugin>
 
@@ -670,22 +763,6 @@
 				</reportSets>
 			</plugin>
 
-			<!-- FindBugs -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.4</version>
-			</plugin>
-
-			<!-- JavaNCSS -->
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>javancss-maven-plugin</artifactId>
-				<version>2.1</version>
-			</plugin>
-			-->
-
 			<!-- JDepend -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -693,27 +770,24 @@
 				<version>2.0</version>
 			</plugin>
 
-			<!-- Sonar -->
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.0.2</version>
-			</plugin>
-			-->
-
 			<!-- Changes -->
 			<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
         <version>2.12</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>changes-report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
+				<configuration>
+					<githubAPIServerId>github-com</githubAPIServerId>
+					<onlyCurrentVersion>true</onlyCurrentVersion>
+					<onlyMilestoneIssues>true</onlyMilestoneIssues>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>github-report</report>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
       </plugin>
 
 			<!-- Tag Report -->
@@ -728,6 +802,8 @@
 						<tag>idea</tag>
 						<tag>MUDO</tag>
           	<tag>mudo</tag>
+						<tag>NOPMD</tag>
+            <tag>NOTE</tag>
           </tags>
 					<tagListOptions>
 						<tagClasses>
@@ -749,13 +825,23 @@
 				</configuration>
       </plugin>
 
-			<!-- Clirr -->
+			<!-- Clirr for Compatibility Checks -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>clirr-maven-plugin</artifactId>
 				<version>2.7</version>
 			</plugin>
 		</plugins>
+
+		<!-- Sonar -->
+		<!--
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.0.2</version>
+		</plugin>
+		-->
+
 	</reporting>
 
 <!--
