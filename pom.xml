@@ -63,9 +63,14 @@
 	</issueManagement>
 
 	<scm>
+		<url>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</url>
+		<connection>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</connection>
+		<developerConnection>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</developerConnection>
+		<!--
 		<url>https://github.com/PolymathicCoder/servo-influxdb</url>
 		<connection>scm:git:git://github.com/PolymathicCoder/servo-influxdb.git</connection>
 		<developerConnection>scm:git:git@github.com:PolymathicCoder/servo-influxdb.git</developerConnection>
+		-->
 	</scm>
 
 <!-- Propersties -->
@@ -471,7 +476,7 @@
 							<host>api.github.com</host>
 							<repositoryOwner>PolymathicCoder</repositoryOwner>
 							<repositoryName>servo-influxdb</repositoryName>
-							<server>github-com</server>
+							<server>github.com</server>
 							<branch>refs/heads/gh-pages</branch>
 							<path>${project.version}</path>
 							<message>Generated Maven Site for: ${project.version}</message>
@@ -488,7 +493,7 @@
 							<host>api.github.com</host>
 							<repositoryOwner>PolymathicCoder</repositoryOwner>
 							<repositoryName>servo-influxdb</repositoryName>
-							<server>github-com</server>
+							<server>github.com</server>
 							<branch>refs/heads/mvn-repo</branch>
 							<path></path>
 							<message>Generated Maven artifacts for: ${project.version}</message>
@@ -518,6 +523,8 @@
 			      <developBranchName>develop</developBranchName>
 			      <versionTagPrefix>rev-</versionTagPrefix><!-- Custom your tag prefixes-->
 			    </flowInitContext>
+					<username>${settingsKey}.username</username>
+					<password>${settingsKey}.password</password>
 			  </configuration>
       </plugin>
 
@@ -587,7 +594,7 @@
         <configuration>
           <usernameProperty>username</usernameProperty>
           <passwordProperty>password</passwordProperty>
-          <settingsKey>github-com</settingsKey>
+          <settingsKey>github.com</settingsKey>
           <useSystemProperties>true</useSystemProperties>
         </configuration>
 				<!--
