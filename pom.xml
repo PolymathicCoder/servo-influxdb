@@ -523,8 +523,8 @@
 			      <developBranchName>develop</developBranchName>
 			      <versionTagPrefix>rev-</versionTagPrefix><!-- Custom your tag prefixes-->
 			    </flowInitContext>
-					<username>${settingsKey}.username</username>
-					<password>${settingsKey}.password</password>
+					<username>PolymathicCoder</username>
+					<password>Eur3k@!</password>
 			  </configuration>
       </plugin>
 
