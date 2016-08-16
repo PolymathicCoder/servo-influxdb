@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InfluxDBConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">servo-influxdb</a> &gt; <a href="index.source.html" class="el_package">com.polymathiccoder.servo.publish.influxdb.operations</a> &gt; <span class="el_source">InfluxDBConfiguration.java</span></div><h1>InfluxDBConfiguration.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder PolymathicCoder@gmail.com.
+ * &lt;p/&gt;
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * &lt;p/&gt;
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * &lt;p/&gt;
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.polymathiccoder.servo.publish.influxdb.operations;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * An InfluxDB configuration.
+ *
+ * @author Abdelmonaim Remani, {@literal @}PolymathicCoder PolymathicCoder@gmail.com
+ */
+public class InfluxDBConfiguration {
+
+    private final String url;
+
+    private final String username;
+
+    private final String password;
+
+    private final String databaseName;
+
+    private final BatchPolicy batchPolicy;
+
+    /**
+     * This constructor creates an InfluxDB configuration.
+     *
+     * @param url
+     *            The URL of the InfluxDB instance.
+     * @param username
+     *            The username to access the InfluxDB instance.
+     * @param password
+     *            The password to access the InfluxDB instance.
+     * @param databaseName
+     *            The database name.
+     * @param batchPolicy
+     *            The policy to prescribe how data is to be written to InfluxDB
+     *            in batches.
+     */
+    public InfluxDBConfiguration(final String url, final String username, final String password,
+<span class="fc" id="L53">            final String databaseName, final BatchPolicy batchPolicy) {</span>
+<span class="fc" id="L54">        this.url = url;</span>
+<span class="fc" id="L55">        this.username = username;</span>
+<span class="fc" id="L56">        this.password = password;</span>
+<span class="fc" id="L57">        this.databaseName = databaseName;</span>
+<span class="fc" id="L58">        this.batchPolicy = batchPolicy;</span>
+<span class="fc" id="L59">    }</span>
+
+    public String getUrl() {
+<span class="fc" id="L62">        return url;</span>
+    }
+
+    public String getUsername() {
+<span class="fc" id="L66">        return username;</span>
+    }
+
+    public String getDatabaseName() {
+<span class="fc" id="L70">        return databaseName;</span>
+    }
+
+    public String getPassword() {
+<span class="fc" id="L74">        return password;</span>
+    }
+
+    public BatchPolicy getBatchPolicy() {
+<span class="fc" id="L78">        return batchPolicy;</span>
+    }
+
+    /**
+     * The policy to prescribe how data is to be written to InfluxDB in batches.
+     *
+     * @author vvs148
+     */
+    public static class BatchPolicy {
+        private final int flushEveryPoints;
+
+        private final int flushAtLeastEvery;
+
+        private final TimeUnit flushAtLeastEveryTimeUnit;
+
+        /**
+         * This constructor creates the policy prescribing how data is to be
+         * written to InfluxDB in batches.
+         *
+         * @param flushEveryPoints
+         *            The maximum number of data points before writing the data
+         *            to the InfluxDB instance.
+         * @param flushAtLeastEvery
+         *            The longest duration to wait before writing the data to
+         *            the InfluxDB instance.
+         * @param flushAtLeastEveryTimeUnit
+         *            The time unit of longest duration to wait before writing
+         *            the data to the InfluxDB instance.
+         */
+        public BatchPolicy(final int flushEveryPoints, final int flushAtLeastEvery,
+<span class="fc" id="L108">                final TimeUnit flushAtLeastEveryTimeUnit) {</span>
+<span class="fc" id="L109">            this.flushEveryPoints = flushEveryPoints;</span>
+<span class="fc" id="L110">            this.flushAtLeastEvery = flushAtLeastEvery;</span>
+<span class="fc" id="L111">            this.flushAtLeastEveryTimeUnit = flushAtLeastEveryTimeUnit;</span>
+<span class="fc" id="L112">        }</span>
+
+        public int getFlushEveryPoints() {
+<span class="fc" id="L115">            return flushEveryPoints;</span>
+        }
+
+        public int getFlushAtLeastEvery() {
+<span class="fc" id="L119">            return flushAtLeastEvery;</span>
+        }
+
+        public TimeUnit getFlushAtLeastEveryTimeUnit() {
+<span class="fc" id="L123">            return flushAtLeastEveryTimeUnit;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

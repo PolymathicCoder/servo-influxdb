@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="./MetricTransformation.html" title="com.polymathiccoder.servo.publish.influxdb.MetricTransformation" alt="" coords="555,267,736,349"/>
+<area shape="rect" id="node1" href="./MetricTransformation.html" title="&lt;TABLE&gt;" alt="" coords="544,261,747,355"/>
+<area shape="rect" id="node2_1" href="./InfluxDBMetricObserver.html" title="com.polymathiccoder.servo.publish.influxdb.InfluxDBMetricObserver" alt="" coords="16,39,651,180"/>
+<area shape="rect" id="node2" href="./InfluxDBMetricObserver.html" title="&lt;TABLE&gt;" alt="" coords="5,33,661,185"/>
+<area shape="rect" id="node3_2" href="./util/NetflixServoUtils.html" title="com.polymathiccoder.servo.publish.influxdb.util.NetflixServoUtils" alt="" coords="696,11,1219,208"/>
+<area shape="rect" id="node3" href="./util/NetflixServoUtils.html" title="&lt;TABLE&gt;" alt="" coords="685,5,1229,213"/>
+</map>

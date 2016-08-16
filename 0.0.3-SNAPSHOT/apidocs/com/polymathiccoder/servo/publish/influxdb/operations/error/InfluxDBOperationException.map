@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="./InfluxDBOperationException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException" alt="" coords="243,196,671,279"/>
+<area shape="rect" id="node1" href="./InfluxDBOperationException.html" title="&lt;TABLE&gt;" alt="" coords="233,191,682,284"/>
+<area shape="rect" id="node2_1" href="./InfluxDBOperationException.DataManipulationException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException.DataManipulationException" alt="" coords="16,337,440,405"/>
+<area shape="rect" id="node2" href="./InfluxDBOperationException.DataManipulationException.html" title="&lt;TABLE&gt;" alt="" coords="5,332,451,411"/>
+<area shape="rect" id="node3_2" href="./InfluxDBOperationException.DataDefinitionException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException.DataDefinitionException" alt="" coords="485,337,891,405"/>
+<area shape="rect" id="node3" href="./InfluxDBOperationException.DataDefinitionException.html" title="&lt;TABLE&gt;" alt="" coords="475,332,901,411"/>
+<area shape="rect" id="node4_3" href="./InfluxDBClientException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBClientException" alt="" coords="254,11,661,137"/>
+<area shape="rect" id="node4" href="./InfluxDBClientException.html" title="&lt;TABLE&gt;" alt="" coords="243,5,671,143"/>
+</map>

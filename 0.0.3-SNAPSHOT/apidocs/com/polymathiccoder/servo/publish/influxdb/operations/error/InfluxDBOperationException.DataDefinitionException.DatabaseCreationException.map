@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="./InfluxDBOperationException.DataDefinitionException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException.DataDefinitionException" alt="" coords="27,11,432,79"/>
+<area shape="rect" id="node1" href="./InfluxDBOperationException.DataDefinitionException.html" title="&lt;TABLE&gt;" alt="" coords="16,5,443,84"/>
+<area shape="rect" id="node2_1" href="./InfluxDBOperationException.DataDefinitionException.DatabaseCreationException.html" title="com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException.DataDefinitionException.DatabaseCreationException" alt="" coords="16,137,443,220"/>
+<area shape="rect" id="node2" href="./InfluxDBOperationException.DataDefinitionException.DatabaseCreationException.html" title="&lt;TABLE&gt;" alt="" coords="5,132,453,225"/>
+</map>

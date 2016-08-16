@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InfluxDBMetricObserver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">servo-influxdb</a> &gt; <a href="index.source.html" class="el_package">com.polymathiccoder.servo.publish.influxdb</a> &gt; <span class="el_source">InfluxDBMetricObserver.java</span></div><h1>InfluxDBMetricObserver.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder PolymathicCoder@gmail.com.
+ * &lt;p/&gt;
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * &lt;p/&gt;
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * &lt;p/&gt;
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.polymathiccoder.servo.publish.influxdb;
+
+import static com.netflix.servo.annotations.DataSourceType.COUNTER;
+import static java.util.stream.Collectors.toList;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.influxdb.dto.Point;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
+import com.netflix.servo.Metric;
+import com.netflix.servo.annotations.DataSourceType;
+import com.netflix.servo.annotations.Monitor;
+import com.netflix.servo.annotations.MonitorTags;
+import com.netflix.servo.monitor.Monitors;
+import com.netflix.servo.monitor.Stopwatch;
+import com.netflix.servo.monitor.Timer;
+import com.netflix.servo.publish.MetricObserver;
+import com.netflix.servo.tag.SortedTagList;
+import com.netflix.servo.tag.Tag;
+import com.netflix.servo.tag.TagList;
+import com.polymathiccoder.servo.publish.influxdb.operations.InfluxDBOperations;
+import com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBClientException;
+import com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBConnectionException;
+import com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException;
+
+/**
+ * An Observer that forwards metrics to an InfluxDB instance.
+ *
+ * @author Abdelmonaim Remani, {@literal @}PolymathicCoder
+ *         PolymathicCoder@gmail.com
+ */
+public class InfluxDBMetricObserver implements MetricObserver {
+
+<span class="fc" id="L56">    protected static final Logger LOGGER = LoggerFactory.getLogger(InfluxDBMetricObserver.class);</span>
+
+    private final InfluxDBOperations influxDBOperations;
+
+    private final List&lt;MetricTransformation&gt; metricTransformations;
+
+    private final InfluxDBMetricObserverMetrics influxDBMetricObserverMetrics;
+
+    /**
+     * This constructor creates an observer that forwards data in batches to an
+     * InfluxDB instance according to a configuration. It also allows for
+     * applying transformations to data point before it writing them to the
+     * database, such as appending additional tags. If no database exists with
+     * the name said in the configuration, it will be automatically created.
+     *
+     * @param influxDBOperations
+     *            XXXX.
+     * @param metricTransformations
+     *            A list of closures allowing for transforming metrics before
+     *            writing them to the database. The closure are applied in the
+     *            same order they were passed as parameters.
+     */
+    public InfluxDBMetricObserver(final InfluxDBOperations influxDBOperations,
+<span class="fc" id="L79">            final MetricTransformation... metricTransformations) {</span>
+<span class="fc" id="L80">        this.influxDBOperations = influxDBOperations;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        this.metricTransformations = metricTransformations.length != 0</span>
+<span class="fc" id="L82">                ? Lists.newArrayList(metricTransformations) : Lists.newArrayList();</span>
+
+        // Create the database
+        try {
+<span class="fc" id="L86">            influxDBOperations.createDatabase();</span>
+<span class="nc" id="L87">        } catch (final InfluxDBClientException influxDBClientException) {</span>
+<span class="nc" id="L88">            LOGGER.error(influxDBClientException.getMessage());</span>
+<span class="fc" id="L89">        }</span>
+
+        // Register Metrics
+<span class="fc" id="L92">        influxDBMetricObserverMetrics = new InfluxDBMetricObserverMetrics(new HashSet&lt;&gt;());</span>
+<span class="fc" id="L93">    }</span>
+
+    @Override
+    public void update(final List&lt;Metric&gt; metrics) {
+<span class="fc" id="L97">        final Stopwatch stopwatch = influxDBMetricObserverMetrics.influxDBReportingTimer.start();</span>
+<span class="fc" id="L98">        influxDBMetricObserverMetrics.numMetricsTotal.addAndGet(metrics.size());</span>
+
+        // @formatter:off
+<span class="fc" id="L101">        List&lt;Point&gt; points = metrics.stream()</span>
+<span class="fc" id="L102">                .map((metric) -&gt; metricTransformations.stream().reduce(metric,</span>
+<span class="pc" id="L103">                        (m, mt) -&gt; mt.apply(m), (m1, m2) -&gt; m1))</span>
+<span class="fc" id="L104">                .map((metric) -&gt; Point.measurement(metric.getConfig().getName())</span>
+<span class="fc" id="L105">                        .time(metric.getTimestamp(), TimeUnit.MILLISECONDS)</span>
+<span class="fc" id="L106">                        .tag(metric.getConfig().getTags().asMap())</span>
+<span class="fc" id="L107">                        .addField(&quot;value&quot;, metric.getNumberValue()).build())</span>
+<span class="fc" id="L108">                .collect(toList());</span>
+        // @formatter:on
+
+        try {
+<span class="fc" id="L112">            LOGGER.debug(&quot;Writing {} metrics to the InfluxDB instance&quot;, metrics.size());</span>
+<span class="fc" id="L113">            influxDBOperations.writeDataInBatch(points);</span>
+<span class="fc" id="L114">            influxDBMetricObserverMetrics.numMetricsSent.addAndGet(metrics.size());</span>
+<span class="nc" id="L115">        } catch (final InfluxDBConnectionException.RefusedException</span>
+                | InfluxDBConnectionException.TimedOutException influxDBClientException) {
+<span class="nc" id="L117">            influxDBMetricObserverMetrics.numMetricsDroppedSendTimeout.incrementAndGet();</span>
+<span class="nc" id="L118">        } catch (final InfluxDBOperationException.DataManipulationException.DataWriteOperationException influxDBClientException) {</span>
+<span class="nc" id="L119">            influxDBMetricObserverMetrics.numMetricsDroppedHttpErr.incrementAndGet();</span>
+        } finally {
+<span class="pc" id="L121">            influxDBMetricObserverMetrics.numMetricsTotal.addAndGet(metrics.size());</span>
+<span class="pc" id="L122">        }</span>
+
+<span class="fc" id="L124">        stopwatch.stop();</span>
+<span class="fc" id="L125">    }</span>
+
+    @Override
+    public String getName() {
+<span class="nc" id="L129">        return &quot;influxDBMetricObserver&quot;;</span>
+    }
+
+    // Types
+    public static class InfluxDBMetricObserverMetrics {
+<span class="fc" id="L134">        private final Timer influxDBReportingTimer = Monitors.newTimer(&quot;influxDBReportingTime&quot;);</span>
+
+<span class="fc" id="L136">        @Monitor(name = &quot;numMetricsTotal&quot;, type = COUNTER)</span>
+        private final AtomicInteger numMetricsTotal = new AtomicInteger(0);
+
+<span class="fc" id="L139">        @Monitor(name = &quot;numMetricsSent&quot;, type = COUNTER)</span>
+        private final AtomicInteger numMetricsSent = new AtomicInteger(0);
+
+<span class="fc" id="L142">        @Monitor(name = &quot;numMetricsDroppedSendTimeout&quot;, type = DataSourceType.COUNTER)</span>
+        private final AtomicInteger numMetricsDroppedSendTimeout = new AtomicInteger(0);
+
+<span class="fc" id="L145">        @Monitor(name = &quot;numMetricsDroppedHttpErr&quot;, type = COUNTER)</span>
+        private final AtomicInteger numMetricsDroppedHttpErr = new AtomicInteger(0);
+
+        @MonitorTags
+        private final TagList tags;
+
+<span class="fc" id="L151">        public InfluxDBMetricObserverMetrics(final Collection&lt;Tag&gt; tags) {</span>
+<span class="fc" id="L152">            this.tags = SortedTagList.builder().withTags(tags).build();</span>
+<span class="fc" id="L153">        }</span>
+
+        {
+<span class="fc" id="L156">            Monitors.registerObject(&quot;influxDBMetricObserver&quot;, this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InfluxDBOperations.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">servo-influxdb</a> &gt; <a href="index.source.html" class="el_package">com.polymathiccoder.servo.publish.influxdb.operations</a> &gt; <span class="el_source">InfluxDBOperations.java</span></div><h1>InfluxDBOperations.java</h1><pre class="source lang-java linenums">/**
+ * Copyright (c) 2016, Abdelmonaim Remani {@literal @}PolymathicCoder PolymathicCoder@gmail.com.
+ * &lt;p/&gt;
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * &lt;p/&gt;
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * &lt;p/&gt;
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.polymathiccoder.servo.publish.influxdb.operations;
+
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.util.List;
+
+import org.influxdb.InfluxDB.ConsistencyLevel;
+import org.influxdb.dto.BatchPoints;
+import org.influxdb.dto.Point;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBClientException;
+import com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBConnectionException;
+import com.polymathiccoder.servo.publish.influxdb.operations.error.InfluxDBOperationException;
+
+import retrofit.RetrofitError;
+import retrofit.mime.TypedByteArray;
+
+/**
+ * An Observer that forwards metrics to an InfluxDB instance.
+ *
+ * @author Abdelmonaim Remani, {@literal @}PolymathicCoder
+ *         PolymathicCoder@gmail.com
+ */
+public class InfluxDBOperations {
+
+    private final InfluxDBConnection influxDBConnection;
+
+<span class="fc" id="L46">    public InfluxDBOperations(final InfluxDBConnection timeseriesDatagateway) {</span>
+<span class="fc" id="L47">        this.influxDBConnection = timeseriesDatagateway;</span>
+<span class="fc" id="L48">    }</span>
+
+    public void createDatabase() throws InfluxDBClientException {
+<span class="fc" id="L51">        final InfluxDBConfiguration configuration = influxDBConnection.getConfiguration();</span>
+        try {
+<span class="fc" id="L53">            influxDBConnection.getDBInstance().createDatabase(configuration.getDatabaseName());</span>
+<span class="fc" id="L54">        } catch (final RetrofitError retrofitError) {</span>
+<span class="pc" id="L55">            handleException(</span>
+                    retrofitError,
+                    new InfluxDBOperationException.DataDefinitionException.DatabaseCreationException(
+<span class="fc" id="L58">                            influxDBConnection.getConfiguration()));</span>
+<span class="fc" id="L59">        }</span>
+<span class="fc" id="L60">    }</span>
+
+    public void writeDataInBatch(final List&lt;Point&gt; points) throws InfluxDBClientException {
+<span class="fc" id="L63">        final BatchPoints batchPoints = BatchPoints</span>
+<span class="fc" id="L64">                .database(influxDBConnection.getConfiguration().getDatabaseName())</span>
+<span class="fc" id="L65">                .retentionPolicy(&quot;default&quot;).consistency(ConsistencyLevel.ALL).build();</span>
+
+<span class="fc" id="L67">        points.forEach((point) -&gt; batchPoints.point(point));</span>
+
+        try {
+<span class="fc" id="L70">            influxDBConnection.getDBInstance().write(batchPoints);</span>
+<span class="fc" id="L71">        } catch (final RetrofitError exception) {</span>
+<span class="pc" id="L72">            handleException(</span>
+                    exception,
+                    new InfluxDBOperationException.DataManipulationException.DataWriteOperationException(
+<span class="fc" id="L75">                            influxDBConnection.getConfiguration(),</span>
+                            points));
+<span class="fc" id="L77">        }</span>
+<span class="fc" id="L78">    }</span>
+
+    private void handleException(final RetrofitError thrown, final InfluxDBClientException toThrow) {
+<span class="pc bfc" id="L81" title="All 2 branches covered.">        switch (thrown.getKind()) {</span>
+        case NETWORK:
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (thrown.getCause() instanceof SocketException) {</span>
+<span class="fc" id="L84">                throw new InfluxDBConnectionException.RefusedException(</span>
+<span class="fc" id="L85">                        influxDBConnection.getConfiguration());</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            } else if (thrown.getCause() instanceof SocketTimeoutException) {</span>
+<span class="fc" id="L87">                throw new InfluxDBConnectionException.TimedOutException(</span>
+<span class="fc" id="L88">                        influxDBConnection.getConfiguration());</span>
+            } else {
+<span class="fc" id="L90">                throw new InfluxDBConnectionException(</span>
+<span class="fc" id="L91">                        influxDBConnection.getConfiguration());</span>
+            }
+        case HTTP:
+        case CONVERSION:
+        default:
+<span class="fc" id="L96">            String reason = &quot;&quot;;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (thrown.getResponse().getBody() != null) {</span>
+<span class="fc" id="L98">                final String responseBody = new String(((TypedByteArray) thrown.getResponse().getBody()).getBytes());</span>
+                try {
+<span class="fc" id="L100">                    final JsonObject json = new JsonParser().parse(responseBody).getAsJsonObject();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                    if (json.has(&quot;error&quot;)) {</span>
+<span class="fc" id="L102">                        reason = json.get(&quot;error&quot;).getAsString();</span>
+                    } else {
+<span class="fc" id="L104">                        reason = json.toString();</span>
+                    }
+<span class="fc" id="L106">                } catch (final IllegalStateException | JsonSyntaxException exception) {</span>
+<span class="fc" id="L107">                    reason = responseBody;</span>
+<span class="fc" id="L108">                }</span>
+<span class="fc" id="L109">            } else {</span>
+<span class="fc" id="L110">                reason = &quot;&quot;;</span>
+            }
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            reason = reason.isEmpty() ? reason : &quot; - &quot; + reason;</span>
+<span class="fc" id="L113">            toThrow.setReason(&quot;The service returned '&quot; + thrown.getResponse().getStatus() + &quot; &quot; + thrown.getResponse().getReason() + reason + &quot;'&quot;);</span>
+<span class="fc" id="L114">            throw toThrow;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
