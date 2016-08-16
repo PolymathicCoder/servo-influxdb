@@ -68,6 +68,8 @@
 		<connection>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</connection>
 		<developerConnection>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</developerConnection>
 		<!--
+git remote set-url origin git@github.com:PolymathicCoder/servo-influxdb.git
+		OLD: https://github.com/PolymathicCoder/servo-influxdb.git
 		<url>https://github.com/PolymathicCoder/servo-influxdb</url>
 		<connection>scm:git:git://github.com/PolymathicCoder/servo-influxdb.git</connection>
 		<developerConnection>scm:git:git@github.com/PolymathicCoder/servo-influxdb.git</developerConnection>
