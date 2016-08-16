@@ -227,7 +227,8 @@
 <!-- Build -->
 	<build>
 		<plugins>
-			<!-- Compiler -->
+<!-- Source Code Processing and Compilation -->
+			<!-- Javac -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -257,7 +258,7 @@
 				</executions>
 			</plugin>
 
-<!-- Testing -->
+<!-- Testing & Coverage -->
 			<!-- Surefire to run unit tests -->
 			<plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
@@ -355,7 +356,7 @@
 		    </executions>
 			</plugin>
 
-<!-- Static Source Code Analyzer -->
+<!-- Static Source Code Analysis -->
 			<!-- Checkstyle -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -393,6 +394,25 @@
 				<version>3.0.4</version>
 			</plugin>
 
+			<!-- OWASP Dependecy Check (Security Vulnerabilities) -->
+			<plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>1.4.2</version>
+        <configuration>
+            <cveValidForHours>12</cveValidForHours>
+            <failBuildOnCVSS>4</failBuildOnCVSS>
+        </configuration>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>check</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+
+<!-- Binary Packaging -->
 			<!-- Docker -->
 			<plugin>
 				<groupId>com.spotify</groupId>
@@ -411,7 +431,8 @@
 				</configuration>
 			</plugin>
 
-			<!-- Deploy -->
+<!-- Deployment & Publication -->
+			<!-- Maven Deploy -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -421,7 +442,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Staging -->
+			<!-- Sonatype Staging -->
 			<plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -433,7 +454,7 @@
         </configuration>
       </plugin>
 
-			<!-- Site -->
+			<!-- Maven Site -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
@@ -507,7 +528,8 @@
 				</executions>
 			</plugin>
 
-			<!-- Release -->
+<!-- Release & Versioning -->
+			<!-- Maven Release -->
 			<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
@@ -533,26 +555,8 @@
 			  </configuration>
       </plugin>
 
-<!-- Security Analysis -->
-			<!-- OWASP Dependecy Check -->
-			<plugin>
-        <groupId>org.owasp</groupId>
-        <artifactId>dependency-check-maven</artifactId>
-        <version>1.4.2</version>
-        <configuration>
-            <cveValidForHours>12</cveValidForHours>
-            <failBuildOnCVSS>4</failBuildOnCVSS>
-        </configuration>
-        <executions>
-            <execution>
-                <goals>
-                    <goal>check</goal>
-                </goals>
-            </execution>
-        </executions>
-      </plugin>
 
-<!-- Dependecy Analysis -->
+
 
 <!-- Misc -->
 			<!-- I am not a lawyer -->
@@ -608,7 +612,7 @@
 				-->
       </plugin>
 
-			<!-- Reports -->
+			<!-- Project Info -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
@@ -657,12 +661,6 @@
 						<!--<exclude>com/polymathiccoder/MyClass$*</exclude>-->
 					</excludes>
 				</configuration>
-				<!--
-        Workaround to make clirr plugin work with Java 8.
-        The bug is actually in the BCEL library,
-        see https://issues.apache.org/jira/browse/BCEL-173.
-        See also https://github.com/RichardWarburton/lambda-behave/issues/31#issuecomment-86052095
-        -->
         <dependencies>
           <dependency>
             <groupId>com.google.code.findbugs</groupId>
