@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 <!-- Project Information -->
@@ -10,7 +9,7 @@
 
 	<groupId>com.polymathiccoder</groupId>
 	<artifactId>servo-influxdb</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 
 	<organization>
     <name>PolymathicCoder LLC</name>
@@ -72,7 +71,8 @@
 		<url>https://github.com/PolymathicCoder/servo-influxdb</url>
 		<connection>scm:git:https://github.com/PolymathicCoder/servo-influxdb</connection>
 		<developerConnection>scm:git:https://github.com/PolymathicCoder/servo-influxdb</developerConnection>
-	</scm>
+	  <tag>servo-influxdb-0.0.2</tag>
+  </scm>
 
 <!-- Propersties -->
 	<properties>
@@ -497,7 +497,7 @@
 							<repositoryName>servo-influxdb</repositoryName>
 							<server>github.com</server>
 							<branch>refs/heads/mvn-repo</branch>
-							<path></path>
+							<path />
 							<message>Generated Maven artifacts for: ${project.version}</message>
 							<merge>true</merge>
 							<noJekyll>true</noJekyll>
