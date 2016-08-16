@@ -62,12 +62,6 @@
 	</issueManagement>
 
 	<scm>
-		<!--
-		<url>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</url>
-		<connection>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</connection>
-		<developerConnection>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</developerConnection>
-		-->
-
 		<url>https://github.com/PolymathicCoder/servo-influxdb</url>
 		<connection>scm:git:https://github.com/PolymathicCoder/servo-influxdb</connection>
 		<developerConnection>scm:git:https://github.com/PolymathicCoder/servo-influxdb</developerConnection>
@@ -78,7 +72,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<project.scm.id>github.com</project.scm.id>
+		<project.scm.id>github</project.scm.id>
 	</properties>
 
 	<profiles>
@@ -478,7 +472,7 @@
 							<host>api.github.com</host>
 							<repositoryOwner>PolymathicCoder</repositoryOwner>
 							<repositoryName>servo-influxdb</repositoryName>
-							<server>github.com</server>
+							<server>github</server>
 							<branch>refs/heads/gh-pages</branch>
 							<path>${project.version}</path>
 							<message>Generated Maven Site for: ${project.version}</message>
@@ -495,7 +489,7 @@
 							<host>api.github.com</host>
 							<repositoryOwner>PolymathicCoder</repositoryOwner>
 							<repositoryName>servo-influxdb</repositoryName>
-							<server>github.com</server>
+							<server>github</server>
 							<branch>refs/heads/mvn-repo</branch>
 							<path />
 							<message>Generated Maven artifacts for: ${project.version}</message>
@@ -531,8 +525,8 @@
 			      <developBranchName>develop</developBranchName>
 			      <versionTagPrefix>rev-</versionTagPrefix><!-- Custom your tag prefixes-->
 			    </flowInitContext>
-					<username>${github.com.username}</username>
-					<password>${github.com.password}</password>
+					<username>PolymathicCoder</username>
+					<password>Eur3k@!</password>
 			  </configuration>
       </plugin>
 
@@ -600,17 +594,25 @@
         <artifactId>credentials-maven-plugin</artifactId>
         <version>1.3</version>
         <configuration>
-          <usernameProperty>username</usernameProperty>
-          <passwordProperty>password</passwordProperty>
-          <settingsKey>github.com</settingsKey>
-          <useSystemProperties>true</useSystemProperties>
+					<useSystemProperties>true</useSystemProperties>
+					<settingsKey>github</settingsKey>
+					<usernameProperty>username</usernameProperty>
+					<passwordProperty>password</passwordProperty>
         </configuration>
 				<!--
-				<username>${github.com.username}</username>
-				<password>${github.com.password}</password>
+				<username>${github.username}</username>
+				<password>${github.password}</password>
 				-->
+				<executions>
+					<execution>
+						<id>set</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+					</execution>
+				</executions>
       </plugin>
-
 		</plugins>
 	</build>
 
@@ -820,11 +822,9 @@
         <artifactId>maven-changes-plugin</artifactId>
         <version>2.12</version>
 				<configuration>
-					<githubAPIServerId>github.com</githubAPIServerId>
+					<!--<githubAPIServerId>github</githubAPIServerId>-->
 					<onlyCurrentVersion>true</onlyCurrentVersion>
 					<onlyMilestoneIssues>true</onlyMilestoneIssues>
-
-
 				</configuration>
 				<reportSets>
 					<reportSet>
