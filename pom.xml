@@ -69,8 +69,8 @@
 		<developerConnection>scm:git:ssh://github.com/PolymathicCoder/servo-influxdb.git</developerConnection>
 		-->
 		<url>https://github.com/PolymathicCoder/servo-influxdb</url>
-		<connection>scm:git:git://github.com/PolymathicCoder/servo-influxdb.git</connection>
-		<developerConnection>scm:git:git@github.com/PolymathicCoder/servo-influxdb.git</developerConnection>
+		<connection>scm:git:git://github.com:PolymathicCoder/servo-influxdb.git</connection>
+		<developerConnection>scm:git:git@github.com:PolymathicCoder/servo-influxdb.git</developerConnection>
 	</scm>
 
 <!-- Propersties -->
