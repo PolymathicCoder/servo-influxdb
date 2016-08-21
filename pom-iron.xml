@@ -561,15 +561,6 @@
 						<usernameProperty>username</usernameProperty>
 						<passwordProperty>password</passwordProperty>
 					</configuration>
-					<executions>
-						<execution>
-							<id>credentials-set</id>
-							<phase>validate</phase>
-							<goals>
-								<goal>set</goal>
-							</goals>
-						</execution>
-					</executions>
 					<!-- <username>${github.username}</username> <password>${github.password}</password> -->
 				</plugin>
 
@@ -651,7 +642,7 @@
 							<developBranchName>develop</developBranchName>
 							<versionTagPrefix>rev-</versionTagPrefix><!-- Custom your tag prefixes -->
 						</flowInitContext>
-						<username>${github.username}</username>
+						<username>polymathiccoder</username>
 						<password>Eur3k@!</password>
 					</configuration>
 				</plugin>
