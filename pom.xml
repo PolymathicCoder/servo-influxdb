@@ -605,21 +605,24 @@
 					<artifactId>credentials-maven-plugin</artifactId>
 					<version>${com.github.genthaler.credentials-maven-plugin.version}</version>
 					<configuration>
-						<useSystemProperties>false</useSystemProperties>
+						<useSystemProperties>true</useSystemProperties>
+						<settingsKey>${iron-maven.github.repository.server}</settingsKey>
+						<usernameProperty>iron-maven.github.repository.server.username</usernameProperty>
+						<passwordProperty>iron-maven.github.repository.server.password</passwordProperty>
 					</configuration>
 					<executions>
 						<execution>
 							<id>credentials-validate</id>
 							<phase>validate</phase>
 							<goals>
-								<goal>set-all</goal>
+								<goal>set</goal>
 							</goals>
 						</execution>
 						<execution>
 							<id>credentials-pre-site</id>
 							<phase>pre-site</phase>
 							<goals>
-								<goal>set-all</goal>
+								<goal>set</goal>
 							</goals>
 						</execution>
 					</executions>
@@ -703,8 +706,8 @@
 						<flowInitContext>
 							<versionTagPrefix>v-</versionTagPrefix><!-- Custom your tag prefixes -->
 						</flowInitContext>
-						<username>${github.username}</username>
-						<password>${github.password}</password>
+						<username>${iron-maven.github.repository.server.username}</username>
+						<password>${iron-maven.github.repository.server.password}</password>
 					</configuration>
 					<executions>
 						<execution>
