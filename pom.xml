@@ -609,8 +609,15 @@
 					</configuration>
 					<executions>
 						<execution>
-							<id>credentials-set</id>
+							<id>credentials-validate</id>
 							<phase>validate</phase>
+							<goals>
+								<goal>set-all</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>credentials-pre-site</id>
+							<phase>pre-site</phase>
 							<goals>
 								<goal>set-all</goal>
 							</goals>
@@ -699,6 +706,13 @@
 						<username>${github.username}</username>
 						<password>${github.password}</password>
 					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>com.github.genthaler:credentials-maven-plugin:set-all</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 
 				<plugin>
