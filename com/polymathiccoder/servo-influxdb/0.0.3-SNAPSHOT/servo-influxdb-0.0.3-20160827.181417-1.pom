@@ -1303,7 +1303,6 @@
 						</execution>
 					</executions>
 				</plugin>
-
 				<!--
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
