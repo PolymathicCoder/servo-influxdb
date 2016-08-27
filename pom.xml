@@ -8,7 +8,7 @@
 
 	<groupId>com.polymathiccoder</groupId>
 	<artifactId>servo-influxdb</artifactId>
-	<version>0.0.3-x1-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 
 	<!-- Propersties -->
 	<properties>
@@ -93,12 +93,11 @@
 				<role>Developer</role>
 			</roles>
 			<timezone>-8</timezone>
+			<properties>
+		       	<picUrl>https://www.gravatar.com/avatar/e8faf13ca2834441cd9335827ee7e842</picUrl>
+		   	</properties>
 		</developer>
 	</developers>
-	<contributors>
-		<contributor>
-		</contributor>
-	</contributors>
 
 	<mailingLists>
 		<mailingList>
@@ -119,11 +118,11 @@
 		<url>https://github.com/${iron-maven.github.repository.owner}/${iron-maven.github.repository.name}</url>
 		<connection>scm:git:https://github.com/${iron-maven.github.repository.owner}/${iron-maven.github.repository.name}</connection>
 		<developerConnection>scm:git:https://github.com/${iron-maven.github.repository.owner}/${iron-maven.github.repository.name}</developerConnection>
-		<tag>HEAD</tag>
 	</scm>
 
 	<!-- Profiles -->
 	<profiles>
+		<!-- Testing Profiles -->
 		<profile>
 			<id>unit-tests</id>
 			<properties>
@@ -134,6 +133,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 		</profile>
+
 		<profile>
 			<id>all-tests</id>
 			<properties>
@@ -141,6 +141,7 @@
 				<skip.integration.tests>false</skip.integration.tests>
 			</properties>
 		</profile>
+
 		<profile>
 			<id>integration-tests</id>
 			<properties>
@@ -148,9 +149,113 @@
 				<skip.integration.tests>false</skip.integration.tests>
 			</properties>
 		</profile>
+
+		<!-- Deployment Profiles -->
+		<profile>
+			<id>github-repo</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.github</groupId>
+						<artifactId>site-maven-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<configuration>
+							<altDeploymentRepository>local-dir::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<configuration>
+							<serverId>local-dir</serverId>
+							<nexusUrl>file://${project.build.directory}/mvn-repo</nexusUrl>
+							<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+							<skipStaging>true</skipStaging>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+
+			<distributionManagement>
+				<repository>
+					<id>local-dir</id>
+					<url>file://${project.build.directory}/mvn-repo</url>
+					<uniqueVersion>false</uniqueVersion>
+				</repository>
+				<snapshotRepository>
+					<id>local-dir.snapshots</id>
+					<url>file://${project.build.directory}/mvn-repo</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+
+		<profile>
+			<!--  Open Source Software Repository Hosting (OSSRH) -->
+			<id>ossrh-repo</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.github</groupId>
+						<artifactId>site-maven-plugin</artifactId>
+						<version>${com.github.github.site-maven-plugin.version}</version>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-deploy-plugin.version}</version>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+							<skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
+							<skipStaging>false</skipStaging>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+
+			<distributionManagement>
+				<repository>
+					<id>sonatype-nexus.staging</id>
+					<name>Sonatype Nexus Release Repository</name>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+				<snapshotRepository>
+					<id>sonatype-nexus.snapshots Repository</id>
+					<name>Sonatype Nexus Snapshots</name>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
 	</profiles>
 
-	<!-- dependencies -->
+	<!-- Dependencies -->
 	<dependencies>
 		<!-- Compile -->
 		<dependency>
@@ -169,12 +274,6 @@
 			<groupId>org.influxdb</groupId>
 			<artifactId>influxdb-java</artifactId>
 			<version>2.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.10</version>
 		</dependency>
 
 		<dependency>
@@ -269,166 +368,27 @@
 		</dependency>
 	</dependencies>
 
-	<!-- XXXXXXXXXXXXXXX -->
 
-	<distributionManagement>
-		<repository>
-			<id>internal.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
-			<uniqueVersion>false</uniqueVersion>
-		</repository>
-		<snapshotRepository>
-			<id>internal.snapshot.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-		<!-- <repository> <id>sonatype-nexus-staging</id> <name>Nexus Release Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-			</repository> <snapshotRepository> <id>sonatype-nexus-snapshots</id> <name>Sonatype
-			Nexus Snapshots</name> <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-			</snapshotRepository> -->
-	</distributionManagement>
+	<!-- Dependency Management -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.16.10</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
+	<!-- Repositories -->
 	<repositories>
-		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-
+		<!-- EGit -->
 		<repository>
 			<id>egit</id>
 			<name>Eclipse egit</name>
 			<url>https://repo.eclipse.org/content/repositories/egit-releases/</url>
 		</repository>
 	</repositories>
-
-	<reporting>
-		<plugins>
-			<!-- Javadoc -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>javadoc-no-fork</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<!-- Checkstyle -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>checkstyle</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<!-- PMD -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-			</plugin>
-
-			<!-- FindBugs -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-			</plugin>
-
-			<!-- OWASP Dependecy Check -->
-			<plugin>
-				<groupId>org.owasp</groupId>
-				<artifactId>dependency-check-maven</artifactId>
-				<configuration>
-					<name>OWASP Vulnerabilities</name>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>aggregate</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<!-- Compatibility -->
-			<!-- Clirr -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>clirr-maven-plugin</artifactId>
-			</plugin>
-
-			<!-- JXR for Cross-referencing the Source Code -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>${org.apache.maven.plugins.maven-jxr-plugin.version}</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>aggregate</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<!-- JaCoCo -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<configuration>
-					<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<!-- JDepend -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jdepend-maven-plugin</artifactId>
-				<version>${org.codehaus.mojo.jdepend-maven-plugin.version}</version>
-			</plugin>
-
-			<!-- Changes -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-changes-plugin</artifactId>
-				<version>${org.apache.maven.plugins.maven-changes-plugin.version}</version>
-			</plugin>
-
-			<!-- Tag Report -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>taglist-maven-plugin</artifactId>
-				<version>${org.codehaus.mojo.taglist-maven-plugin.version}</version>
-			</plugin>
-
-		</plugins>
-
-	</reporting>
-
 
 	<!-- Build -->
 	<build>
@@ -508,6 +468,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
@@ -584,7 +545,7 @@
 					<version>${com.dkirrane.maven.plugins.ggitflow-maven-plugin.version}</version>
 					<configuration>
 						<prefixes>
-						    <versionTagPrefix>v-</versionTagPrefix>
+							<versionTagPrefix>v-</versionTagPrefix>
 						</prefixes>
 						<msgPrefix>[ggitflow-maven-plugin]</msgPrefix>
 						<msgSuffix>+review @reviewer123</msgSuffix>
@@ -709,13 +670,6 @@
 						<username>${iron-maven.github.repository.server.username}</username>
 						<password>${iron-maven.github.repository.server.password}</password>
 					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>com.github.genthaler:credentials-maven-plugin:set-all</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 
 				<plugin>
@@ -779,9 +733,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${org.apache.maven.plugins.maven-deploy-plugin.version}</version>
-					<configuration>
-						<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
-					</configuration>
 				</plugin>
 
 				<plugin>
@@ -986,7 +937,7 @@
 						<execution>
 							<id>attach-sources</id>
 							<goals>
-								<goal>jar</goal>
+								<goal>jar-no-fork</goal>
 							</goals>
 						</execution>
 					</executions>
@@ -1273,22 +1224,139 @@
 					<artifactId>nexus-staging-maven-plugin</artifactId>
 					<version>${org.sonatype.plugins.nexus-staging-maven-plugin.version}</version>
 					<extensions>true</extensions>
-					<configuration>
-						<nexusUrl>file://${project.build.directory}/mvn-repo</nexusUrl>
-						<serverId>internal.repo</serverId>
-					</configuration>
+					<configuration />
+					<executions>
+				    	<execution>
+				        	<id>default-deploy</id>
+				          	<phase>deploy</phase>
+				          	<goals>
+				            	<goal>deploy</goal>
+				          	</goals>
+				    	</execution>
+					</executions>
 				</plugin>
-
 			</plugins>
 		</pluginManagement>
 	</build>
 
+	<!-- Reporting -->
+	<reporting>
+		<plugins>
+		<!-- MUST ORDER -->
+			<!-- Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>javadoc-no-fork</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
 
-	<!-- <profiles> <profile> <id>release-sign-artifacts</id> <activation> <property>
-		<name>performRelease</name> <value>true</value> </property> </activation>
-		<build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-gpg-plugin</artifactId>
-		<version>1.6</version> <executions> <execution> <id>sign-artifacts</id> <phase>verify</phase>
-		<goals> <goal>sign</goal> </goals> </execution> </executions> </plugin> </plugins>
-		</build> </profile> </profiles> -->
+			<!-- Checkstyle -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!-- PMD -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+			</plugin>
+
+			<!-- FindBugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- OWASP Dependecy Check -->
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<configuration>
+					<name>OWASP Vulnerabilities</name>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!-- Compatibility -->
+			<!-- Clirr -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>clirr-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- JXR for Cross-referencing the Source Code -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>${org.apache.maven.plugins.maven-jxr-plugin.version}</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!-- JaCoCo -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!-- JDepend -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+				<version>${org.codehaus.mojo.jdepend-maven-plugin.version}</version>
+			</plugin>
+
+			<!-- Changes -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>${org.apache.maven.plugins.maven-changes-plugin.version}</version>
+			</plugin>
+
+			<!-- Tag Report -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+				<version>${org.codehaus.mojo.taglist-maven-plugin.version}</version>
+			</plugin>
+
+		</plugins>
+
+	</reporting>
 
 </project>
