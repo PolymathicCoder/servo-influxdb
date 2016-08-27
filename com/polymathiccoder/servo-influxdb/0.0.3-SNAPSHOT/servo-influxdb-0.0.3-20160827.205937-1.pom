@@ -149,10 +149,74 @@
 			</properties>
 		</profile>
 
+
 		<profile>
-			<id>ossrh</id>
+			<id>github-repo</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>com.github.github</groupId>
+						<artifactId>site-maven-plugin</artifactId>
+						<version>${com.github.github.site-maven-plugin.version}</version>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-deploy-plugin.version}</version>
+						<configuration>
+							<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<configuration>
+							<serverId>internal.repo</serverId>
+							<nexusUrl>file://${project.build.directory}/mvn-repo</nexusUrl>
+							<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+							<skipStaging>true</skipStaging>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<repository>
+					<id>internal.repo</id>
+					<name>Temporary Staging Repository</name>
+					<url>file://${project.build.directory}/mvn-repo</url>
+					<uniqueVersion>false</uniqueVersion>
+				</repository>
+				<snapshotRepository>
+					<id>internal.snapshot.repo</id>
+					<name>Temporary Staging Repository</name>
+					<url>file://${project.build.directory}/mvn-repo</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+
+		<profile>
+			<id>ossrh-repo</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.github</groupId>
+						<artifactId>site-maven-plugin</artifactId>
+						<version>${com.github.github.site-maven-plugin.version}</version>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
@@ -172,15 +236,6 @@
 							<autoReleaseAfterClose>true</autoReleaseAfterClose>
 							<skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
 							<skipStaging>false</skipStaging>
-						</configuration>
-					</plugin>
-
-					<plugin>
-						<groupId>com.github.github</groupId>
-						<artifactId>site-maven-plugin</artifactId>
-						<version>${com.github.github.site-maven-plugin.version}</version>
-						<configuration>
-							<skip>true</skip>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -313,21 +368,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<distributionManagement>
-		<repository>
-			<id>internal.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
-			<uniqueVersion>false</uniqueVersion>
-		</repository>
-		<snapshotRepository>
-			<id>internal.snapshot.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<repositories>
 		<!-- Local -->
@@ -827,9 +867,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${org.apache.maven.plugins.maven-deploy-plugin.version}</version>
-					<configuration>
-						<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
-					</configuration>
 				</plugin>
 
 				<plugin>
@@ -1321,13 +1358,7 @@
 					<artifactId>nexus-staging-maven-plugin</artifactId>
 					<version>${org.sonatype.plugins.nexus-staging-maven-plugin.version}</version>
 					<extensions>true</extensions>
-					<configuration>
-						<nexusUrl>file://${project.build.directory}/mvn-repo</nexusUrl>
-						<serverId>internal.repo</serverId>
-						<altStagingDirectory>internal.repo::default::file://${project.build.directory}/mvn-repo</altStagingDirectory>
-						<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-						<skipStaging>true</skipStaging>
-					</configuration>
+					<configuration />
 					<executions>
 				    	<execution>
 				        	<id>default-deploy</id>
