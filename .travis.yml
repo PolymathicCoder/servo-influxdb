@@ -19,3 +19,5 @@ before_script:
 - echo "MAVEN_OPTS='-Xmx4g'" > ~/.mavenrc
 script:
 - mvn clean verify
+after_success:
+- mvn deploy
