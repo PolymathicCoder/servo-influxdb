@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <prerequisites>
@@ -631,7 +630,7 @@
                                 <repositoryName>${iron-maven.github.repository.name}</repositoryName>
                                 <server>${iron-maven.github.repository.server}</server>
                                 <branch>refs/heads/mvn-repo</branch>
-                                <path/>
+                                <path />
                                 <message>Generated Maven artifacts for: ${project.version}</message>
                                 <merge>false</merge>
                                 <noJekyll>true</noJekyll>
@@ -1235,7 +1234,7 @@
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${org.sonatype.plugins.nexus-staging-maven-plugin.version}</version>
                     <extensions>true</extensions>
-                    <configuration/>
+                    <configuration />
                     <executions>
                         <execution>
                             <id>default-deploy</id>
