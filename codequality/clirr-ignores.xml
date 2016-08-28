@@ -1,0 +1,29 @@
+<!--
+  Clirr is a tool that checks Java libraries for binary and source compatibility with older releases.
+
+  This file lists known (and accepted) differences with the reference version specified in pom.xml.
+
+  To update this file:
+  * run `mvn clirr:clirr` at the root directory
+  * check the reports in `<module>/target/site/clirr-report.html`
+  * add new differences if needed. Difference types are explained at http://www.mojohaus.org/clirr-maven-plugin/examples/ignored-differences.html
+
+  The formatter introduces line breaks that make Clirr unhappy:
+  @formatter:off
+-->
+<differences>
+
+<!--
+	http://www.mojohaus.org/clirr-maven-plugin/examples/ignored-differences.html
+	<difference>
+		<className></className>
+		<differenceType></differenceType>
+		<field></field>
+		<method></method>
+		<from></from>
+		<to></to>
+		<justification></justification>
+	</difference>
+-->
+
+</differences>
