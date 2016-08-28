@@ -20,7 +20,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -120,6 +121,9 @@ local.properties
 .idea/jsLibraryMappings.xml
 
 # Sensitive or high-churn files:
+.idea
+*.iml
+.idea/sonarIssues.xml
 .idea/dataSources.ids
 .idea/dataSources.xml
 .idea/dataSources.local.xml
@@ -193,3 +197,14 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+.idea/.name
+.idea/codeStyleSettings.xml
+.idea/compiler.xml
+.idea/copyright/
+.idea/encodings.xml
+.idea/findbugs-idea.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/qaplug_profiles.xml
+.idea/thriftCompiler.xml
+servo-influxdb.iml
