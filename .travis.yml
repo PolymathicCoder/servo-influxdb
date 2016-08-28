@@ -9,7 +9,7 @@ before_install:
   - sudo apt-get install -y graphviz
 before_script:
   - git clone -b travis `git config --get remote.origin.url` target/travis
-  - echo "MAVEN_OPTS='-Xmx2g -XX:MaxPermSize=512m'" > ~/.mavenrc
+  - yes | cp -rf target/travis/settings.xml ~/.m2/settings.xml
+  - echo "MAVEN_OPTS='-Xmx4g'" > ~/.mavenrc
 script:
-  - cat target/travis/settings.xml
-  - mvn --settings target/travis/settings.xml --global-settings target/travis/settings.xml clean
+  - mvn clean verify
