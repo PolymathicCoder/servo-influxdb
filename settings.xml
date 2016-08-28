@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/SETTINGS/1.0.0" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <interactiveMode>true</interactiveMode>
+
+    <servers>
+        <!-- GitHub -->
+        <server>
+            <id>github</id>
+            <username>PolymathicCoder</username>
+            <!--
+            <password>{yD3OC1FeWbQH/gWI2nA6JOVT5VP1SdFvryjVHJJ2fXU=}</password>
+            <password>Eur3k@!</password>
+            -->
+            <password>Eur3k@!</password>
+            <privateKey>/Users/vvs148/.ssh/github/polymathiccoder-at-github</privateKey>
+            <passphrase></passphrase>
+            <filePermissions>664</filePermissions>
+            <directoryPermissions>775</directoryPermissions>
+            <configuration>
+            </configuration>
+        </server>
+
+        <!-- OSSRH -->
+        <server>
+            <id>ossrh</id> <!-- used for release deployment -->
+            <username>PolymathicCoder</username> <!-- oss-sonatype.username -->
+            <password>Eur3k@!</password> <!-- oss-sonatype.password -->
+        </server>
+    </servers>
+
+
+    <profiles>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- GPG -->
+                <gpg.executable>gpg2</gpg.executable>
+                <gpg.keyname>F1033A0A</gpg.keyname>
+                <gpg.passphrase>Eur3k@!</gpg.passphrase>
+            </properties>
+        </profile>
+    </profiles>
+
+</settings>
