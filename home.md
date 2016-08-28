@@ -14,5 +14,5 @@ A Servo and InfluxDB Integration.
 [![Build Status](https://travis-ci.org/PolymathicCoder/servo-influxdb.svg?branch=master)](https://travis-ci.org/PolymathicCoder/servo-influxdb)
 
 {% for version in site.static_files %}
-  <a src="{{ site.baseurl }}{{ version.path }}">{{ version.path }}</a>
+  <a href="{{ site.baseurl }}{{ version.path }}">{{ version.path }}</a>
 {% endfor %}
