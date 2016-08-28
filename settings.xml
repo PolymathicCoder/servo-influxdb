@@ -6,13 +6,13 @@
         <!-- GitHub -->
         <server>
             <id>github</id>
-            <username>PolymathicCoder</username>
+            <username>${env.CI_DEPLOY_USERNAME}</username>
             <!--
             <password>{yD3OC1FeWbQH/gWI2nA6JOVT5VP1SdFvryjVHJJ2fXU=}</password>
-            <password>Eur3k@!</password>
+            <password>${env.CI_DEPLOY_PASSWORD}</password>
             -->
-            <password>Eur3k@!</password>
-            <privateKey>/Users/vvs148/.ssh/github/polymathiccoder-at-github</privateKey>
+            <password>${env.CI_DEPLOY_PASSWORD}</password>
+            <privateKey>/Users/vvs148/.ssh/github/${env.CI_DEPLOY_USERNAME}-at-github</privateKey>
             <passphrase></passphrase>
             <filePermissions>664</filePermissions>
             <directoryPermissions>775</directoryPermissions>
@@ -23,8 +23,8 @@
         <!-- OSSRH -->
         <server>
             <id>ossrh</id> <!-- used for release deployment -->
-            <username>PolymathicCoder</username> <!-- oss-sonatype.username -->
-            <password>Eur3k@!</password> <!-- oss-sonatype.password -->
+            <username>${env.CI_DEPLOY_USERNAME}</username> <!-- oss-sonatype.username -->
+            <password>${env.CI_DEPLOY_PASSWORD}</password> <!-- oss-sonatype.password -->
         </server>
     </servers>
 
@@ -39,7 +39,7 @@
                 <!-- GPG -->
                 <gpg.executable>gpg2</gpg.executable>
                 <gpg.keyname>F1033A0A</gpg.keyname>
-                <gpg.passphrase>Eur3k@!</gpg.passphrase>
+                <gpg.passphrase>${env.CI_DEPLOY_PASSWORD}</gpg.passphrase>
             </properties>
         </profile>
     </profiles>
