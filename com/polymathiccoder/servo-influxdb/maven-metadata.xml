@@ -3,9 +3,10 @@
   <groupId>com.polymathiccoder</groupId>
   <artifactId>servo-influxdb</artifactId>
   <versioning>
+    <release>0.0.3</release>
     <versions>
-      <version>0.0.3-SNAPSHOT</version>
+      <version>0.0.3</version>
     </versions>
-    <lastUpdated>20160827221039</lastUpdated>
+    <lastUpdated>20160828221357</lastUpdated>
   </versioning>
 </metadata>

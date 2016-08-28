@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <prerequisites>
@@ -8,7 +7,7 @@
 
     <groupId>com.polymathiccoder</groupId>
     <artifactId>servo-influxdb</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3</version>
 
     <!-- Properties -->
     <properties>
@@ -65,6 +64,8 @@
         <org.projectlombok.lombok-maven-plugin.version>1.16.10.0</org.projectlombok.lombok-maven-plugin.version>
 
         <org.sonatype.plugins.nexus-staging-maven-plugin.version>1.6.7</org.sonatype.plugins.nexus-staging-maven-plugin.version>
+
+        <org.zeroturnaround.jrebel-maven-plugin.version>1.1.6</org.zeroturnaround.jrebel-maven-plugin.version>
     </properties>
 
     <!-- Project Information -->
@@ -177,6 +178,16 @@
                     </plugin>
 
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>true</useReleaseProfile>
+                            <goals>deploy</goals>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
                         <configuration>
@@ -227,13 +238,24 @@
                     </plugin>
 
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <goals>deploy</goals>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
                             <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
                             <skipStaging>false</skipStaging>
                         </configuration>
@@ -534,6 +556,11 @@
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+            </plugin>
         </plugins>
 
         <!-- Plugin Definitions -->
@@ -603,7 +630,7 @@
                                 <repositoryName>${iron-maven.github.repository.name}</repositoryName>
                                 <server>${iron-maven.github.repository.server}</server>
                                 <branch>refs/heads/mvn-repo</branch>
-                                <path/>
+                                <path />
                                 <message>Generated Maven artifacts for: ${project.version}</message>
                                 <merge>false</merge>
                                 <noJekyll>true</noJekyll>
@@ -866,7 +893,7 @@
                     <version>${org.apache.maven.plugins.maven-project-info-reports-plugin.version}</version>
                     <configuration>
                         <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
-                        <dependencyLocationsEnabled>true</dependencyLocationsEnabled>
+                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -1207,7 +1234,7 @@
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${org.sonatype.plugins.nexus-staging-maven-plugin.version}</version>
                     <extensions>true</extensions>
-                    <configuration/>
+                    <configuration />
                     <executions>
                         <execution>
                             <id>default-deploy</id>
@@ -1218,6 +1245,22 @@
                         </execution>
                     </executions>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.zeroturnaround</groupId>
+                    <artifactId>jrebel-maven-plugin</artifactId>
+                    <version>${org.zeroturnaround.jrebel-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>generate-rebel-xml</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
