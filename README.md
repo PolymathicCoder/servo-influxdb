@@ -1,16 +1,15 @@
 
 # Running Tests
+```sh
 mvn test
 mvn test -P unit-tests
 mvn test -P integration-tests
 mvn test -P all-tests
+```
 
 # Deploy Binaries to the mvn-repo branch
 mvn deploy
-
-# Sign and deploy
-mvn clean deploy -Dgpg.keyname=F1033A0A -Dgpg.passphrase=Secr3t
-
+__
 
 # Deply Site to the gh-pages branch
 mvn site-deploy
