@@ -13,6 +13,6 @@ A Servo and InfluxDB Integration.
 
 [![Build Status](https://travis-ci.org/PolymathicCoder/servo-influxdb.svg?branch=master)](https://travis-ci.org/PolymathicCoder/servo-influxdb)
 
-{% for version in site.static_files %}
-  <a href="{{ site.baseurl }}{{ version.path }}">{{ version.path }}</a>
+{% for file in site.static_files %}
+  <a href="{{ site.baseurl }}{{ file.path }}">{{ file.path }}</a>
 {% endfor %}
