@@ -12,7 +12,7 @@ before_install:
 - sudo apt-get install -y graphviz
 - sudo apt-get install -y gnupg2
 - openssl aes-256-cbc -K $encrypted_5797349fa709_key -iv $encrypted_5797349fa709_iv -in gpg-secret-key.asc.enc -out gpg-secret-key.asc -d
-- gpg2 --batch --import $encrypted_5797349fa709_key
+- gpg2 --batch --import gpg-secret-key.asc
 before_script:
 - git clone -b travis `git config --get remote.origin.url` target/travis
 - yes | cp -rf target/travis/settings.xml ~/.m2/settings.xml
