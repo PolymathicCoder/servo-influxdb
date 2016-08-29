@@ -14,7 +14,12 @@ A Servo and InfluxDB Integration.
 [![Build Status](https://travis-ci.org/PolymathicCoder/servo-influxdb.svg?branch=master)](https://travis-ci.org/PolymathicCoder/servo-influxdb)
 
 {% for file in site.static_files %}
-{% if file.path contains '/index.html' %}
+
+{% assign count = file.path | split: "/" | size %}
+{% if count == 2 %}
 <a href="{{ site.baseurl }}{{ file.path }}">{{ file.path }}</a>
 {% endif %}
 {% endfor %}
+
+
+^\/[^/]+\/index\.html$
