@@ -20,6 +20,3 @@ permalink: /
 {% endif %}
 {% endfor %}
 * [Maven Repository](https://raw.github.com/PolymathicCoder/servo-influxdbt/mvn-repo/)
-
-
-
