@@ -16,7 +16,7 @@ A Servo and InfluxDB Integration.
 {% for file in site.static_files %}
 
 {% assign count = file.path | split: "/" | size %}
-{% if count == 2 %}
+{% if count > 2 %}
 <a href="{{ site.baseurl }}{{ file.path }}">{{ file.path }}</a>
 {% endif %}
 {% endfor %}
