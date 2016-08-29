@@ -18,7 +18,9 @@ A Servo and InfluxDB Integration.
 {% assign count = file.path | split: "/" | size %}
 {% if count == 3 %}
 {% if file.path contains '/index.html' %}
-<a href="{{ site.baseurl }}{{ file.path }}">{{ file.path }}</a>
+<a href="{{ site.baseurl }}{{ file.path }}">
+{{ file.path | split: "/" | pop }}
+</a>
 {% endif %}
 {% endif %}
 {% endfor %}
