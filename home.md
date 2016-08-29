@@ -16,7 +16,7 @@ permalink: /
 {% assign count = file.path | split: "/" | size %}
 {% if count == 3 %}
 {% if file.path contains '/index.html' %}
-<a href="{{ file.path | split: "/" | pop }}">{{ site.baseurl }}{{ file.path }}</a>
+<a href="{{ file.path | split: '/' | pop }}">{{ site.baseurl }}{{ file.path }}</a>
 {% endif %}
 {% endif %}
 {% endfor %}
