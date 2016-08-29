@@ -20,6 +20,6 @@ before_script:
 - yes | cp -rf target/travis/settings.xml ~/.m2/settings.xml
 - echo "MAVEN_OPTS='-Xmx4g'" > ~/.mavenrc
 script:
-- mvn clean verify deploy site site-deploy
+- mvn clean verify site
 after_success:
-- mvn deploy
+- mvn deploy site-deploy
