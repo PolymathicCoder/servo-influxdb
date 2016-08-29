@@ -22,4 +22,4 @@ before_script:
 script:
 - mvn clean verify site
 after_success:
-- mvn deploy site-deploy
+- mvn deploy
