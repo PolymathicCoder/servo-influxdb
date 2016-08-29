@@ -16,7 +16,7 @@ permalink: /
 {% if count == 3 %}
 {% if file.path contains '/index.html' %}
 
-+ [{{ file.path | split: "/" | pop }}]({{ site.baseurl }}{{ file.path }})
+<ul> [{{ file.path | split: "/" | pop }}]({{ site.baseurl }}{{ file.path }})
 
 {% endif %}
 {% endif %}
